@@ -1,0 +1,1722 @@
+/* =========================================================
+   InsightGram AI
+   CSS Part - 1
+   File : src/styles/style.css
+   ========================================================= */
+
+/* ------------------------------ */
+/* Reset */
+/* ------------------------------ */
+
+*,
+*::before,
+*::after{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+/* ------------------------------ */
+/* Root */
+/* ------------------------------ */
+
+:root{
+
+    color-scheme:dark;
+
+    --background:#07070A;
+    --background-secondary:#0D1018;
+    --surface:#12161F;
+    --surface-hover:#171C27;
+
+    --border:rgba(255,255,255,.08);
+
+    --text:#F5F7FA;
+    --text-secondary:#A5ADBA;
+    --text-muted:#6F7785;
+
+    --primary:#6D5DF6;
+    --secondary:#18C8FF;
+    --success:#34D399;
+    --warning:#FBBF24;
+    --danger:#FF5A7A;
+
+    --radius-xs:6px;
+    --radius-sm:10px;
+    --radius-md:16px;
+    --radius-lg:22px;
+    --radius-xl:30px;
+
+    --shadow-sm:0 8px 24px rgba(0,0,0,.20);
+    --shadow-md:0 15px 40px rgba(0,0,0,.35);
+    --shadow-lg:0 20px 60px rgba(0,0,0,.55);
+
+    --transition:.30s ease;
+}
+
+/* ------------------------------ */
+/* HTML */
+/* ------------------------------ */
+
+html{
+
+    scroll-behavior:smooth;
+
+    font-size:16px;
+
+}
+
+/* ------------------------------ */
+/* Body */
+/* ------------------------------ */
+
+body{
+
+    font-family:"Inter",sans-serif;
+
+    background:var(--background);
+
+    color:var(--text);
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+    text-rendering:optimizeLegibility;
+
+    -webkit-font-smoothing:antialiased;
+
+    -moz-osx-font-smoothing:grayscale;
+
+}
+
+/* ------------------------------ */
+/* Root Container */
+/* ------------------------------ */
+
+#root{
+
+    min-height:100vh;
+
+    position:relative;
+
+    isolation:isolate;
+
+}
+
+/* ------------------------------ */
+/* Typography */
+/* ------------------------------ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+
+    font-weight:700;
+
+    line-height:1.2;
+
+}
+
+p{
+
+    color:var(--text-secondary);
+
+    line-height:1.7;
+
+}
+
+/* ------------------------------ */
+/* Links */
+/* ------------------------------ */
+
+a{
+
+    color:inherit;
+
+    text-decoration:none;
+
+}
+
+/* ------------------------------ */
+/* Lists */
+/* ------------------------------ */
+
+ul,
+ol{
+
+    list-style:none;
+
+}
+
+/* ------------------------------ */
+/* Media */
+/* ------------------------------ */
+
+img,
+picture,
+video,
+canvas,
+svg{
+
+    display:block;
+
+    max-width:100%;
+
+}
+
+/* ------------------------------ */
+/* Form */
+/* ------------------------------ */
+
+button,
+input,
+textarea,
+select{
+
+    font:inherit;
+
+    outline:none;
+
+    border:none;
+
+    background:none;
+
+    color:inherit;
+
+}
+
+/* ------------------------------ */
+/* Button */
+/* ------------------------------ */
+
+button{
+
+    cursor:pointer;
+
+}
+
+/* ------------------------------ */
+/* Selection */
+/* ------------------------------ */
+
+::selection{
+
+    background:var(--primary);
+
+    color:#FFFFFF;
+
+}
+
+/* ------------------------------ */
+/* Scrollbar */
+/* ------------------------------ */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#090A0F;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#252D3E;
+
+    border-radius:999px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#36415A;
+
+}
+/* =========================================================
+   InsightGram AI
+   CSS Part - 2
+   File : src/styles/style.css
+   Add this BELOW Part - 1
+   ========================================================= */
+
+/* =========================================================
+   Animated Aurora Background
+   ========================================================= */
+
+body::before{
+    content:"";
+
+    position:fixed;
+
+    inset:-30%;
+
+    pointer-events:none;
+
+    z-index:-2;
+
+    background:
+        radial-gradient(circle at 15% 20%,rgba(109,93,246,.22),transparent 34%),
+        radial-gradient(circle at 80% 15%,rgba(24,200,255,.18),transparent 32%),
+        radial-gradient(circle at 50% 80%,rgba(176,38,255,.18),transparent 35%),
+        radial-gradient(circle at 90% 90%,rgba(0,255,255,.12),transparent 30%);
+
+    filter:blur(90px);
+
+    animation:auroraMove 22s linear infinite alternate;
+}
+
+/* =========================================================
+   Background Noise Layer
+   ========================================================= */
+
+body::after{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    z-index:-1;
+
+    opacity:.035;
+
+    background-image:
+        radial-gradient(#ffffff 1px,transparent 1px);
+
+    background-size:18px 18px;
+
+}
+
+/* =========================================================
+   Glass Utility
+   ========================================================= */
+
+.glass{
+
+    background:rgba(255,255,255,.045);
+
+    backdrop-filter:blur(22px);
+
+    -webkit-backdrop-filter:blur(22px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+        0 10px 35px rgba(0,0,0,.35);
+
+}
+
+/* =========================================================
+   Gradient Text
+   ========================================================= */
+
+.gradient-text{
+
+    background:
+        linear-gradient(
+            135deg,
+            #7D6BFF 0%,
+            #19C8FF 45%,
+            #FFFFFF 100%
+        );
+
+    -webkit-background-clip:text;
+
+    background-clip:text;
+
+    color:transparent;
+
+}
+
+/* =========================================================
+   Glow Border
+   ========================================================= */
+
+.glow-border{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.glow-border::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-1px;
+
+    border-radius:inherit;
+
+    padding:1px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(109,93,246,.7),
+            rgba(24,200,255,.55),
+            rgba(255,255,255,.15)
+        );
+
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+
+    -webkit-mask-composite:xor;
+
+    mask-composite:exclude;
+
+    pointer-events:none;
+
+}
+
+/* =========================================================
+   Fade Animation
+   ========================================================= */
+
+.fade-up{
+
+    animation:fadeUp .7s ease both;
+
+}
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(28px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* =========================================================
+   Floating Animation
+   ========================================================= */
+
+.float{
+
+    animation:float 5s ease-in-out infinite;
+
+}
+
+@keyframes float{
+
+    0%{
+
+        transform:translateY(0);
+
+    }
+
+    50%{
+
+        transform:translateY(-8px);
+
+    }
+
+    100%{
+
+        transform:translateY(0);
+
+    }
+
+}
+
+/* =========================================================
+   Aurora Animation
+   ========================================================= */
+
+@keyframes auroraMove{
+
+    0%{
+
+        transform:translate(-4%,-3%) scale(1);
+
+    }
+
+    50%{
+
+        transform:translate(3%,4%) scale(1.08);
+
+    }
+
+    100%{
+
+        transform:translate(-2%,2%) scale(1.03);
+
+    }
+
+}
+
+/* =========================================================
+   InsightGram AI
+   CSS Part - 3
+   File : src/styles/style.css
+   Add this BELOW Part - 2
+   ========================================================= */
+
+/* =========================================================
+   Container System
+   ========================================================= */
+
+.container{
+
+    width:min(1440px,calc(100% - 48px));
+
+    margin-inline:auto;
+
+}
+
+.container-sm{
+
+    width:min(1200px,calc(100% - 48px));
+
+    margin-inline:auto;
+
+}
+
+.container-lg{
+
+    width:min(1680px,calc(100% - 48px));
+
+    margin-inline:auto;
+
+}
+
+/* =========================================================
+   Grid System
+   ========================================================= */
+
+.grid{
+
+    display:grid;
+
+    gap:24px;
+
+}
+
+.grid-2{
+
+    grid-template-columns:repeat(2,1fr);
+
+}
+
+.grid-3{
+
+    grid-template-columns:repeat(3,1fr);
+
+}
+
+.grid-4{
+
+    grid-template-columns:repeat(4,1fr);
+
+}
+
+.grid-auto{
+
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+}
+
+/* =========================================================
+   Flex Utilities
+   ========================================================= */
+
+.flex{
+
+    display:flex;
+
+}
+
+.flex-center{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.flex-between{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+}
+
+.flex-column{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+/* =========================================================
+   Spacing Utilities
+   ========================================================= */
+
+.gap-8{gap:8px;}
+.gap-12{gap:12px;}
+.gap-16{gap:16px;}
+.gap-20{gap:20px;}
+.gap-24{gap:24px;}
+.gap-32{gap:32px;}
+.gap-40{gap:40px;}
+
+.mt-16{margin-top:16px;}
+.mt-24{margin-top:24px;}
+.mt-32{margin-top:32px;}
+.mt-40{margin-top:40px;}
+.mt-48{margin-top:48px;}
+.mt-64{margin-top:64px;}
+
+.mb-16{margin-bottom:16px;}
+.mb-24{margin-bottom:24px;}
+.mb-32{margin-bottom:32px;}
+.mb-40{margin-bottom:40px;}
+.mb-48{margin-bottom:48px;}
+.mb-64{margin-bottom:64px;}
+
+.p-16{padding:16px;}
+.p-20{padding:20px;}
+.p-24{padding:24px;}
+.p-32{padding:32px;}
+.p-40{padding:40px;}
+
+/* =========================================================
+   Width Utilities
+   ========================================================= */
+
+.w-100{
+
+    width:100%;
+
+}
+
+.h-100{
+
+    height:100%;
+
+}
+
+/* =========================================================
+   Radius Utilities
+   ========================================================= */
+
+.radius-sm{
+
+    border-radius:var(--radius-sm);
+
+}
+
+.radius-md{
+
+    border-radius:var(--radius-md);
+
+}
+
+.radius-lg{
+
+    border-radius:var(--radius-lg);
+
+}
+
+.radius-xl{
+
+    border-radius:var(--radius-xl);
+
+}
+
+/* =========================================================
+   Shadow Utilities
+   ========================================================= */
+
+.shadow-sm{
+
+    box-shadow:var(--shadow-sm);
+
+}
+
+.shadow-md{
+
+    box-shadow:var(--shadow-md);
+
+}
+
+.shadow-lg{
+
+    box-shadow:var(--shadow-lg);
+
+}
+
+/* =========================================================
+   Text Utilities
+   ========================================================= */
+
+.text-center{
+
+    text-align:center;
+
+}
+
+.text-left{
+
+    text-align:left;
+
+}
+
+.text-right{
+
+    text-align:right;
+
+}
+
+.text-primary{
+
+    color:var(--primary);
+
+}
+
+.text-secondary{
+
+    color:var(--secondary);
+
+}
+
+.text-muted{
+
+    color:var(--text-muted);
+
+}
+
+.text-success{
+
+    color:var(--success);
+
+}
+
+.text-warning{
+
+    color:var(--warning);
+
+}
+
+.text-danger{
+
+    color:var(--danger);
+
+}
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+
+@media (max-width:1200px){
+
+    .grid-4{
+
+        grid-template-columns:repeat(2,1fr);
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    .container,
+    .container-sm,
+    .container-lg{
+
+        width:calc(100% - 32px);
+
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+/* =========================================================
+   InsightGram AI
+   CSS Part - 4
+   File : src/styles/style.css
+   Add this BELOW Part - 3
+   ========================================================= */
+
+
+/* =========================================================
+   Premium Button System
+   ========================================================= */
+
+.btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:12px;
+
+    padding:14px 24px;
+
+    border-radius:16px;
+
+    font-weight:600;
+
+    letter-spacing:.2px;
+
+    transition:var(--transition);
+
+    user-select:none;
+
+    white-space:nowrap;
+
+}
+
+.btn:disabled{
+
+    opacity:.5;
+
+    cursor:not-allowed;
+
+}
+
+/* Primary */
+
+.btn-primary{
+
+    background:
+        linear-gradient(
+            135deg,
+            #6D5DF6,
+            #18C8FF
+        );
+
+    color:#fff;
+
+    box-shadow:
+        0 12px 35px rgba(74,94,255,.35);
+
+}
+
+.btn-primary:hover{
+
+    transform:translateY(-2px);
+
+    box-shadow:
+        0 18px 45px rgba(74,94,255,.45);
+
+}
+
+/* Secondary */
+
+.btn-secondary{
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.btn-secondary:hover{
+
+    background:rgba(255,255,255,.08);
+
+}
+
+/* Outline */
+
+.btn-outline{
+
+    border:1px solid rgba(255,255,255,.12);
+
+}
+
+.btn-outline:hover{
+
+    background:rgba(255,255,255,.05);
+
+}
+
+/* Danger */
+
+.btn-danger{
+
+    background:linear-gradient(
+        135deg,
+        #FF5A7A,
+        #FF2D55
+    );
+
+    color:#fff;
+
+}
+
+/* =========================================================
+   Input System
+   ========================================================= */
+
+.input{
+
+    width:100%;
+
+    height:56px;
+
+    padding-inline:18px;
+
+    border-radius:16px;
+
+    background:rgba(255,255,255,.04);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:var(--transition);
+
+}
+
+.input:focus{
+
+    border-color:#18C8FF;
+
+    box-shadow:
+        0 0 0 4px rgba(24,200,255,.12);
+
+}
+
+/* =========================================================
+   Card
+   ========================================================= */
+
+.card{
+
+    background:rgba(255,255,255,.045);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    backdrop-filter:blur(24px);
+
+    -webkit-backdrop-filter:blur(24px);
+
+    border-radius:24px;
+
+    padding:24px;
+
+    transition:var(--transition);
+
+}
+
+.card:hover{
+
+    transform:translateY(-4px);
+
+    border-color:rgba(24,200,255,.18);
+
+}
+
+/* =========================================================
+   Badge
+   ========================================================= */
+
+.badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    font-size:.82rem;
+
+    font-weight:600;
+
+}
+
+.badge-success{
+
+    background:rgba(52,211,153,.14);
+
+    color:var(--success);
+
+}
+
+.badge-danger{
+
+    background:rgba(255,90,122,.14);
+
+    color:var(--danger);
+
+}
+
+.badge-warning{
+
+    background:rgba(251,191,36,.14);
+
+    color:var(--warning);
+
+}
+
+.badge-primary{
+
+    background:rgba(109,93,246,.14);
+
+    color:var(--primary);
+
+}
+
+/* =========================================================
+   Divider
+   ========================================================= */
+
+.divider{
+
+    width:100%;
+
+    height:1px;
+
+    background:rgba(255,255,255,.06);
+
+}
+
+/* =========================================================
+   Glass Panel
+   ========================================================= */
+
+.panel{
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,.05),
+            rgba(255,255,255,.03)
+        );
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:28px;
+
+    backdrop-filter:blur(30px);
+
+    -webkit-backdrop-filter:blur(30px);
+
+    overflow:hidden;
+
+}
+
+/* =========================================================
+   Hover Glow
+   ========================================================= */
+
+.hover-glow{
+
+    transition:var(--transition);
+
+}
+
+.hover-glow:hover{
+
+    box-shadow:
+        0 0 25px rgba(24,200,255,.15),
+        0 0 55px rgba(109,93,246,.18);
+
+}
+
+/* =========================================================
+   Fade Scale
+   ========================================================= */
+
+.fade-scale{
+
+    animation:fadeScale .45s ease both;
+
+}
+
+@keyframes fadeScale{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.95);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+/* =========================================================
+   InsightGram AI
+   CSS Part - 5
+   File : src/styles/style.css
+   Add this BELOW Part - 4
+   ========================================================= */
+
+
+/* =========================================================
+   Loading Spinner
+   ========================================================= */
+
+.loader{
+
+    width:64px;
+
+    height:64px;
+
+    border-radius:50%;
+
+    border:4px solid rgba(255,255,255,.08);
+
+    border-top-color:var(--secondary);
+
+    animation:spin .9s linear infinite;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   Skeleton Loading
+   ========================================================= */
+
+.skeleton{
+
+    position:relative;
+
+    overflow:hidden;
+
+    background:rgba(255,255,255,.05);
+
+}
+
+.skeleton::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    transform:translateX(-100%);
+
+    background:
+
+        linear-gradient(
+
+            90deg,
+
+            transparent,
+
+            rgba(255,255,255,.08),
+
+            transparent
+
+        );
+
+    animation:skeletonLoading 1.5s infinite;
+
+}
+
+@keyframes skeletonLoading{
+
+    100%{
+
+        transform:translateX(100%);
+
+    }
+
+}
+
+
+/* =========================================================
+   Status Dot
+   ========================================================= */
+
+.status-dot{
+
+    width:12px;
+
+    height:12px;
+
+    border-radius:50%;
+
+}
+
+.status-online{
+
+    background:var(--success);
+
+    box-shadow:
+
+        0 0 12px rgba(52,211,153,.6);
+
+}
+
+.status-warning{
+
+    background:var(--warning);
+
+}
+
+.status-danger{
+
+    background:var(--danger);
+
+}
+
+
+/* =========================================================
+   Avatar
+   ========================================================= */
+
+.avatar{
+
+    width:56px;
+
+    height:56px;
+
+    border-radius:50%;
+
+    overflow:hidden;
+
+    flex-shrink:0;
+
+    background:
+
+        linear-gradient(
+
+            135deg,
+
+            var(--primary),
+
+            var(--secondary)
+
+        );
+
+}
+
+.avatar img{
+
+    width:100%;
+
+    height:100%;
+
+    object-fit:cover;
+
+}
+
+
+/* =========================================================
+   Tick Animation
+   ========================================================= */
+
+.tick-success{
+
+    animation:tickSuccess .35s ease;
+
+}
+
+@keyframes tickSuccess{
+
+    0%{
+
+        transform:scale(.4);
+
+        opacity:0;
+
+    }
+
+    70%{
+
+        transform:scale(1.15);
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+
+/* =========================================================
+   Pulse
+   ========================================================= */
+
+.pulse{
+
+    animation:pulse 2s infinite;
+
+}
+
+@keyframes pulse{
+
+    0%{
+
+        box-shadow:0 0 0 0 rgba(24,200,255,.5);
+
+    }
+
+    70%{
+
+        box-shadow:0 0 0 18px rgba(24,200,255,0);
+
+    }
+
+    100%{
+
+        box-shadow:0 0 0 0 rgba(24,200,255,0);
+
+    }
+
+}
+
+
+/* =========================================================
+   Scroll Reveal
+   ========================================================= */
+
+.reveal{
+
+    opacity:0;
+
+    transform:translateY(40px);
+
+    transition:
+
+        opacity .8s ease,
+
+        transform .8s ease;
+
+}
+
+.reveal.active{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+
+/* =========================================================
+   Utility Classes
+   ========================================================= */
+
+.hidden{
+
+    display:none !important;
+
+}
+
+.invisible{
+
+    visibility:hidden;
+
+}
+
+.pointer{
+
+    cursor:pointer;
+
+}
+
+.relative{
+
+    position:relative;
+
+}
+
+.absolute{
+
+    position:absolute;
+
+}
+
+.fixed{
+
+    position:fixed;
+
+}
+
+.overflow-hidden{
+
+    overflow:hidden;
+
+}
+
+.round{
+
+    border-radius:999px;
+
+}
+
+.blur{
+
+    backdrop-filter:blur(18px);
+
+    -webkit-backdrop-filter:blur(18px);
+
+}
+
+.transition{
+
+    transition:var(--transition);
+
+}
+
+
+/* =========================================================
+   Print
+   ========================================================= */
+
+@media print{
+
+    body{
+
+        background:#ffffff;
+
+        color:#000000;
+
+    }
+
+}
+
+/* =========================================================
+   InsightGram AI
+   CSS Part - 6 (Final)
+   File : src/styles/style.css
+   Add this BELOW Part - 5
+   ========================================================= */
+
+
+/* =========================================================
+   Focus Accessibility
+   ========================================================= */
+
+:focus-visible{
+
+    outline:2px solid var(--secondary);
+
+    outline-offset:3px;
+
+}
+
+
+/* =========================================================
+   Selection Disable
+   ========================================================= */
+
+.no-select{
+
+    user-select:none;
+
+    -webkit-user-select:none;
+
+}
+
+
+/* =========================================================
+   Image Rendering
+   ========================================================= */
+
+img{
+
+    image-rendering:auto;
+
+}
+
+
+/* =========================================================
+   Horizontal Rule
+   ========================================================= */
+
+hr{
+
+    border:none;
+
+    height:1px;
+
+    background:rgba(255,255,255,.08);
+
+}
+
+
+/* =========================================================
+   Code
+   ========================================================= */
+
+code{
+
+    font-family:
+
+        Consolas,
+
+        "Courier New",
+
+        monospace;
+
+    color:#8EDBFF;
+
+}
+
+
+/* =========================================================
+   Blockquote
+   ========================================================= */
+
+blockquote{
+
+    border-left:4px solid var(--primary);
+
+    padding-left:18px;
+
+    color:var(--text-secondary);
+
+}
+
+
+/* =========================================================
+   Tables
+   ========================================================= */
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+thead{
+
+    background:rgba(255,255,255,.04);
+
+}
+
+th,
+td{
+
+    padding:16px;
+
+    text-align:left;
+
+    border-bottom:1px solid rgba(255,255,255,.06);
+
+}
+
+tbody tr{
+
+    transition:var(--transition);
+
+}
+
+tbody tr:hover{
+
+    background:rgba(255,255,255,.03);
+
+}
+
+
+/* =========================================================
+   Smooth Fade
+   ========================================================= */
+
+.fade{
+
+    animation:fade .4s ease;
+
+}
+
+@keyframes fade{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+
+/* =========================================================
+   Rotate
+   ========================================================= */
+
+.rotate{
+
+    animation:rotate 12s linear infinite;
+
+}
+
+@keyframes rotate{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+/* =========================================================
+   Scale Hover
+   ========================================================= */
+
+.scale-hover{
+
+    transition:var(--transition);
+
+}
+
+.scale-hover:hover{
+
+    transform:scale(1.04);
+
+}
+
+
+/* =========================================================
+   Fade Hover
+   ========================================================= */
+
+.opacity-hover{
+
+    transition:var(--transition);
+
+}
+
+.opacity-hover:hover{
+
+    opacity:.82;
+
+}
+
+
+/* =========================================================
+   Responsive Font Scaling
+   ========================================================= */
+
+@media (max-width:992px){
+
+    html{
+
+        font-size:15px;
+
+    }
+
+}
+
+@media (max-width:768px){
+
+    html{
+
+        font-size:14px;
+
+    }
+
+}
+
+@media (max-width:480px){
+
+    html{
+
+        font-size:13px;
+
+    }
+
+}
+
+
+/* =========================================================
+   Reduced Motion
+   ========================================================= */
+
+@media (prefers-reduced-motion:reduce){
+
+    *{
+
+        animation:none !important;
+
+        transition:none !important;
+
+        scroll-behavior:auto !important;
+
+    }
+
+}
+
+
+/* =========================================================
+   End of CSS
+   ========================================================= */

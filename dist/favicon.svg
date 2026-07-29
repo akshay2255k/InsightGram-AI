@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 512 512">
+
+    <defs>
+
+        <linearGradient id="bg"
+                        x1="0%"
+                        y1="0%"
+                        x2="100%"
+                        y2="100%">
+
+            <stop offset="0%"
+                  stop-color="#6D5DF6"/>
+
+            <stop offset="50%"
+                  stop-color="#18C8FF"/>
+
+            <stop offset="100%"
+                  stop-color="#8A2BE2"/>
+
+        </linearGradient>
+
+        <linearGradient id="graph"
+                        x1="0%"
+                        y1="100%"
+                        x2="100%"
+                        y2="0%">
+
+            <stop offset="0%"
+                  stop-color="#FFFFFF"/>
+
+            <stop offset="100%"
+                  stop-color="#D7F7FF"/>
+
+        </linearGradient>
+
+        <filter id="glow">
+
+            <feGaussianBlur stdDeviation="8"
+                            result="blur"/>
+
+            <feMerge>
+
+                <feMergeNode in="blur"/>
+
+                <feMergeNode in="SourceGraphic"/>
+
+            </feMerge>
+
+        </filter>
+
+    </defs>
+
+    <rect x="24"
+          y="24"
+          width="464"
+          height="464"
+          rx="120"
+          fill="url(#bg)"/>
+
+    <circle cx="256"
+            cy="256"
+            r="152"
+            fill="none"
+            stroke="rgba(255,255,255,.15)"
+            stroke-width="12"/>
+
+    <path
+        d="M150 320
+           L210 250
+           L270 285
+           L360 170"
+        fill="none"
+        stroke="url(#graph)"
+        stroke-width="24"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        filter="url(#glow)"
+    />
+
+    <circle cx="150"
+            cy="320"
+            r="14"
+            fill="#FFFFFF"/>
+
+    <circle cx="210"
+            cy="250"
+            r="14"
+            fill="#FFFFFF"/>
+
+    <circle cx="270"
+            cy="285"
+            r="14"
+            fill="#FFFFFF"/>
+
+    <circle cx="360"
+            cy="170"
+            r="18"
+            fill="#FFFFFF"/>
+
+</svg>
