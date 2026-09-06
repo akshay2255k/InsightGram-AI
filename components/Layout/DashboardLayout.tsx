@@ -1,16 +1,18 @@
 // ======================================================
 // InsightGram AI
 // File : src/components/Layout/DashboardLayout.tsx
-// Part : 1
 // ======================================================
 
 import {
     type ReactNode,
-    useState,
+    useEffect,
 } from "react";
 
 import Sidebar from "./Sidebar";
+
 import Topbar from "./Topbar";
+
+import themeService from "../../services/themeService";
 
 interface DashboardLayoutProps {
 
@@ -24,25 +26,11 @@ export default function DashboardLayout({
 
 }: DashboardLayoutProps) {
 
-    const [
+    useEffect(() => {
 
-        darkMode,
+        themeService.initialize();
 
-        setDarkMode,
-
-    ] = useState(true);
-
-    const toggleTheme = () => {
-
-        document.body.classList.toggle(
-            "light-theme"
-        );
-
-        setDarkMode(
-            (previous) => !previous
-        );
-
-    };
+    }, []);
 
     return (
 
@@ -52,20 +40,9 @@ export default function DashboardLayout({
 
             <div className="dashboard-main">
 
-                <Topbar
-
-                    darkMode={darkMode}
-
-                    onToggleTheme={toggleTheme}
-
-                />
+                <Topbar />
 
                 <main className="dashboard-content">
-                    // ======================================================
-// InsightGram AI
-// File : src/components/Layout/DashboardLayout.tsx
-// Part : 2
-// ======================================================
 
                     <div className="fade">
 

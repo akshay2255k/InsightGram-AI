@@ -1,1722 +1,1174 @@
-/* =========================================================
+/* ======================================================
    InsightGram AI
-   CSS Part - 1
    File : src/styles/style.css
-   ========================================================= */
+   Main Application Styles
+   ====================================================== */
 
-/* ------------------------------ */
-/* Reset */
-/* ------------------------------ */
-
-*,
-*::before,
-*::after{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+    box-sizing: border-box;
 }
 
-/* ------------------------------ */
-/* Root */
-/* ------------------------------ */
-
-:root{
-
-    color-scheme:dark;
-
-    --background:#07070A;
-    --background-secondary:#0D1018;
-    --surface:#12161F;
-    --surface-hover:#171C27;
-
-    --border:rgba(255,255,255,.08);
-
-    --text:#F5F7FA;
-    --text-secondary:#A5ADBA;
-    --text-muted:#6F7785;
-
-    --primary:#6D5DF6;
-    --secondary:#18C8FF;
-    --success:#34D399;
-    --warning:#FBBF24;
-    --danger:#FF5A7A;
-
-    --radius-xs:6px;
-    --radius-sm:10px;
-    --radius-md:16px;
-    --radius-lg:22px;
-    --radius-xl:30px;
-
-    --shadow-sm:0 8px 24px rgba(0,0,0,.20);
-    --shadow-md:0 15px 40px rgba(0,0,0,.35);
-    --shadow-lg:0 20px 60px rgba(0,0,0,.55);
-
-    --transition:.30s ease;
+html {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
 }
 
-/* ------------------------------ */
-/* HTML */
-/* ------------------------------ */
-
-html{
-
-    scroll-behavior:smooth;
-
-    font-size:16px;
-
+body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    font-family:
+        Inter,
+        ui-sans-serif,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+    background:
+        #07101d;
+    color:
+        #f5f7fa;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
-
-/* ------------------------------ */
-/* Body */
-/* ------------------------------ */
-
-body{
-
-    font-family:"Inter",sans-serif;
-
-    background:var(--background);
-
-    color:var(--text);
-
-    min-height:100vh;
-
-    overflow-x:hidden;
-
-    text-rendering:optimizeLegibility;
-
-    -webkit-font-smoothing:antialiased;
-
-    -moz-osx-font-smoothing:grayscale;
-
-}
-
-/* ------------------------------ */
-/* Root Container */
-/* ------------------------------ */
-
-#root{
-
-    min-height:100vh;
-
-    position:relative;
-
-    isolation:isolate;
-
-}
-
-/* ------------------------------ */
-/* Typography */
-/* ------------------------------ */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6{
-
-    font-weight:700;
-
-    line-height:1.2;
-
-}
-
-p{
-
-    color:var(--text-secondary);
-
-    line-height:1.7;
-
-}
-
-/* ------------------------------ */
-/* Links */
-/* ------------------------------ */
-
-a{
-
-    color:inherit;
-
-    text-decoration:none;
-
-}
-
-/* ------------------------------ */
-/* Lists */
-/* ------------------------------ */
-
-ul,
-ol{
-
-    list-style:none;
-
-}
-
-/* ------------------------------ */
-/* Media */
-/* ------------------------------ */
-
-img,
-picture,
-video,
-canvas,
-svg{
-
-    display:block;
-
-    max-width:100%;
-
-}
-
-/* ------------------------------ */
-/* Form */
-/* ------------------------------ */
 
 button,
 input,
-textarea,
-select{
-
-    font:inherit;
-
-    outline:none;
-
-    border:none;
-
-    background:none;
-
-    color:inherit;
-
+select,
+textarea {
+    font: inherit;
 }
 
-/* ------------------------------ */
-/* Button */
-/* ------------------------------ */
-
-button{
-
-    cursor:pointer;
-
+button {
+    border: 0;
 }
 
-/* ------------------------------ */
-/* Selection */
-/* ------------------------------ */
-
-::selection{
-
-    background:var(--primary);
-
-    color:#FFFFFF;
-
+a {
+    color: inherit;
+    text-decoration: none;
 }
 
-/* ------------------------------ */
-/* Scrollbar */
-/* ------------------------------ */
-
-::-webkit-scrollbar{
-
-    width:10px;
-
+img {
+    max-width: 100%;
 }
 
-::-webkit-scrollbar-track{
-
-    background:#090A0F;
-
+#root {
+    min-height: 100vh;
 }
 
-::-webkit-scrollbar-thumb{
+/* ======================================================
+   Scrollbars
+   ====================================================== */
 
-    background:#252D3E;
-
-    border-radius:999px;
-
+* {
+    scrollbar-width: thin;
+    scrollbar-color:
+        rgba(125, 145, 180, 0.35)
+        transparent;
 }
 
-::-webkit-scrollbar-thumb:hover{
-
-    background:#36415A;
-
+*::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
 }
-/* =========================================================
-   InsightGram AI
-   CSS Part - 2
-   File : src/styles/style.css
-   Add this BELOW Part - 1
-   ========================================================= */
 
-/* =========================================================
-   Animated Aurora Background
-   ========================================================= */
+*::-webkit-scrollbar-track {
+    background: transparent;
+}
 
-body::before{
-    content:"";
-
-    position:fixed;
-
-    inset:-30%;
-
-    pointer-events:none;
-
-    z-index:-2;
-
+*::-webkit-scrollbar-thumb {
     background:
-        radial-gradient(circle at 15% 20%,rgba(109,93,246,.22),transparent 34%),
-        radial-gradient(circle at 80% 15%,rgba(24,200,255,.18),transparent 32%),
-        radial-gradient(circle at 50% 80%,rgba(176,38,255,.18),transparent 35%),
-        radial-gradient(circle at 90% 90%,rgba(0,255,255,.12),transparent 30%);
-
-    filter:blur(90px);
-
-    animation:auroraMove 22s linear infinite alternate;
+        rgba(125, 145, 180, 0.35);
+    border-radius: 999px;
 }
 
-/* =========================================================
-   Background Noise Layer
-   ========================================================= */
-
-body::after{
-
-    content:"";
-
-    position:fixed;
-
-    inset:0;
-
-    pointer-events:none;
-
-    z-index:-1;
-
-    opacity:.035;
-
-    background-image:
-        radial-gradient(#ffffff 1px,transparent 1px);
-
-    background-size:18px 18px;
-
-}
-
-/* =========================================================
-   Glass Utility
-   ========================================================= */
-
-.glass{
-
-    background:rgba(255,255,255,.045);
-
-    backdrop-filter:blur(22px);
-
-    -webkit-backdrop-filter:blur(22px);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    box-shadow:
-        0 10px 35px rgba(0,0,0,.35);
-
-}
-
-/* =========================================================
-   Gradient Text
-   ========================================================= */
-
-.gradient-text{
-
+*::-webkit-scrollbar-thumb:hover {
     background:
-        linear-gradient(
-            135deg,
-            #7D6BFF 0%,
-            #19C8FF 45%,
-            #FFFFFF 100%
-        );
-
-    -webkit-background-clip:text;
-
-    background-clip:text;
-
-    color:transparent;
-
+        rgba(125, 145, 180, 0.55);
 }
 
-/* =========================================================
-   Glow Border
-   ========================================================= */
+/* ======================================================
+   Dashboard Layout
+   ====================================================== */
 
-.glow-border{
-
-    position:relative;
-
-    overflow:hidden;
-
+.dashboard-layout {
+    min-height: 100vh;
+    display: flex;
+    background:
+        radial-gradient(
+            circle at 15% 0%,
+            rgba(24, 200, 255, 0.07),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(109, 93, 246, 0.07),
+            transparent 30%
+        ),
+        #07101d;
 }
 
-.glow-border::before{
+.dashboard-main {
+    min-width: 0;
+    flex: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
-    content:"";
+.dashboard-content {
+    flex: 1;
+    padding: 28px;
+    min-width: 0;
+}
 
-    position:absolute;
+/* ======================================================
+   Sidebar
+   ====================================================== */
 
-    inset:-1px;
+.sidebar {
+    width: 252px;
+    min-width: 252px;
+    min-height: 100vh;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    border-right:
+        1px solid rgba(255, 255, 255, 0.08);
+    background:
+        rgba(10, 18, 31, 0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    z-index: 50;
+}
 
-    border-radius:inherit;
+.sidebar-header {
+    padding: 22px;
+}
 
-    padding:1px;
+.sidebar .logo {
+    width: 100%;
+    min-height: 110px;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    background:
+        rgba(255, 255, 255, 0.035);
+}
 
+.sidebar .logo img {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.sidebar-nav {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding: 6px 14px 16px;
+}
+
+.sidebar-menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 5px;
+}
+
+.sidebar-item {
+    width: 100%;
+}
+
+.sidebar-link {
+    min-height: 46px;
+    padding: 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 14px;
+    color: #aeb8c8;
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.sidebar-link:hover {
+    color: #ffffff;
+    background:
+        rgba(255, 255, 255, 0.045);
+    transform: translateX(2px);
+}
+
+.sidebar-link.active {
+    color: #ffffff;
     background:
         linear-gradient(
             135deg,
-            rgba(109,93,246,.7),
-            rgba(24,200,255,.55),
-            rgba(255,255,255,.15)
+            #6d5df6 0%,
+            #18c8ff 100%
         );
-
-    -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-
-    -webkit-mask-composite:xor;
-
-    mask-composite:exclude;
-
-    pointer-events:none;
-
+    box-shadow:
+        0 10px 28px rgba(24, 200, 255, 0.18);
 }
 
-/* =========================================================
-   Fade Animation
-   ========================================================= */
-
-.fade-up{
-
-    animation:fadeUp .7s ease both;
-
+.sidebar-footer {
+    padding: 14px 22px 22px;
 }
 
-@keyframes fadeUp{
+/* ======================================================
+   Topbar
+   ====================================================== */
 
-    from{
-
-        opacity:0;
-
-        transform:translateY(28px);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:translateY(0);
-
-    }
-
+.topbar {
+    min-height: 90px;
+    padding: 16px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
+    background:
+        rgba(7, 16, 29, 0.82);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
 }
 
-/* =========================================================
-   Floating Animation
-   ========================================================= */
-
-.float{
-
-    animation:float 5s ease-in-out infinite;
-
+.topbar-right {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    min-width: 0;
 }
 
-@keyframes float{
-
-    0%{
-
-        transform:translateY(0);
-
-    }
-
-    50%{
-
-        transform:translateY(-8px);
-
-    }
-
-    100%{
-
-        transform:translateY(0);
-
-    }
-
+.topbar-right > .card {
+    margin: 0;
 }
 
-/* =========================================================
-   Aurora Animation
-   ========================================================= */
+/* ======================================================
+   Buttons
+   ====================================================== */
 
-@keyframes auroraMove{
-
-    0%{
-
-        transform:translate(-4%,-3%) scale(1);
-
-    }
-
-    50%{
-
-        transform:translate(3%,4%) scale(1.08);
-
-    }
-
-    100%{
-
-        transform:translate(-2%,2%) scale(1.03);
-
-    }
-
+.btn {
+    min-height: 44px;
+    padding: 0 16px;
+    border-radius: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease,
+        background 0.2s ease;
 }
 
-/* =========================================================
-   InsightGram AI
-   CSS Part - 3
-   File : src/styles/style.css
-   Add this BELOW Part - 2
-   ========================================================= */
-
-/* =========================================================
-   Container System
-   ========================================================= */
-
-.container{
-
-    width:min(1440px,calc(100% - 48px));
-
-    margin-inline:auto;
-
+.btn:hover:not(:disabled) {
+    transform: translateY(-1px);
 }
 
-.container-sm{
-
-    width:min(1200px,calc(100% - 48px));
-
-    margin-inline:auto;
-
+.btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
 }
 
-.container-lg{
-
-    width:min(1680px,calc(100% - 48px));
-
-    margin-inline:auto;
-
-}
-
-/* =========================================================
-   Grid System
-   ========================================================= */
-
-.grid{
-
-    display:grid;
-
-    gap:24px;
-
-}
-
-.grid-2{
-
-    grid-template-columns:repeat(2,1fr);
-
-}
-
-.grid-3{
-
-    grid-template-columns:repeat(3,1fr);
-
-}
-
-.grid-4{
-
-    grid-template-columns:repeat(4,1fr);
-
-}
-
-.grid-auto{
-
-    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
-
-}
-
-/* =========================================================
-   Flex Utilities
-   ========================================================= */
-
-.flex{
-
-    display:flex;
-
-}
-
-.flex-center{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-}
-
-.flex-between{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:space-between;
-
-}
-
-.flex-column{
-
-    display:flex;
-
-    flex-direction:column;
-
-}
-
-/* =========================================================
-   Spacing Utilities
-   ========================================================= */
-
-.gap-8{gap:8px;}
-.gap-12{gap:12px;}
-.gap-16{gap:16px;}
-.gap-20{gap:20px;}
-.gap-24{gap:24px;}
-.gap-32{gap:32px;}
-.gap-40{gap:40px;}
-
-.mt-16{margin-top:16px;}
-.mt-24{margin-top:24px;}
-.mt-32{margin-top:32px;}
-.mt-40{margin-top:40px;}
-.mt-48{margin-top:48px;}
-.mt-64{margin-top:64px;}
-
-.mb-16{margin-bottom:16px;}
-.mb-24{margin-bottom:24px;}
-.mb-32{margin-bottom:32px;}
-.mb-40{margin-bottom:40px;}
-.mb-48{margin-bottom:48px;}
-.mb-64{margin-bottom:64px;}
-
-.p-16{padding:16px;}
-.p-20{padding:20px;}
-.p-24{padding:24px;}
-.p-32{padding:32px;}
-.p-40{padding:40px;}
-
-/* =========================================================
-   Width Utilities
-   ========================================================= */
-
-.w-100{
-
-    width:100%;
-
-}
-
-.h-100{
-
-    height:100%;
-
-}
-
-/* =========================================================
-   Radius Utilities
-   ========================================================= */
-
-.radius-sm{
-
-    border-radius:var(--radius-sm);
-
-}
-
-.radius-md{
-
-    border-radius:var(--radius-md);
-
-}
-
-.radius-lg{
-
-    border-radius:var(--radius-lg);
-
-}
-
-.radius-xl{
-
-    border-radius:var(--radius-xl);
-
-}
-
-/* =========================================================
-   Shadow Utilities
-   ========================================================= */
-
-.shadow-sm{
-
-    box-shadow:var(--shadow-sm);
-
-}
-
-.shadow-md{
-
-    box-shadow:var(--shadow-md);
-
-}
-
-.shadow-lg{
-
-    box-shadow:var(--shadow-lg);
-
-}
-
-/* =========================================================
-   Text Utilities
-   ========================================================= */
-
-.text-center{
-
-    text-align:center;
-
-}
-
-.text-left{
-
-    text-align:left;
-
-}
-
-.text-right{
-
-    text-align:right;
-
-}
-
-.text-primary{
-
-    color:var(--primary);
-
-}
-
-.text-secondary{
-
-    color:var(--secondary);
-
-}
-
-.text-muted{
-
-    color:var(--text-muted);
-
-}
-
-.text-success{
-
-    color:var(--success);
-
-}
-
-.text-warning{
-
-    color:var(--warning);
-
-}
-
-.text-danger{
-
-    color:var(--danger);
-
-}
-
-/* =========================================================
-   Responsive
-   ========================================================= */
-
-@media (max-width:1200px){
-
-    .grid-4{
-
-        grid-template-columns:repeat(2,1fr);
-
-    }
-
-}
-
-@media (max-width:768px){
-
-    .container,
-    .container-sm,
-    .container-lg{
-
-        width:calc(100% - 32px);
-
-    }
-
-    .grid-2,
-    .grid-3,
-    .grid-4{
-
-        grid-template-columns:1fr;
-
-    }
-
-}
-
-/* =========================================================
-   InsightGram AI
-   CSS Part - 4
-   File : src/styles/style.css
-   Add this BELOW Part - 3
-   ========================================================= */
-
-
-/* =========================================================
-   Premium Button System
-   ========================================================= */
-
-.btn{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    gap:12px;
-
-    padding:14px 24px;
-
-    border-radius:16px;
-
-    font-weight:600;
-
-    letter-spacing:.2px;
-
-    transition:var(--transition);
-
-    user-select:none;
-
-    white-space:nowrap;
-
-}
-
-.btn:disabled{
-
-    opacity:.5;
-
-    cursor:not-allowed;
-
-}
-
-/* Primary */
-
-.btn-primary{
-
+.btn-primary {
+    color: #ffffff;
     background:
         linear-gradient(
             135deg,
-            #6D5DF6,
-            #18C8FF
+            #6d5df6 0%,
+            #18c8ff 100%
         );
-
-    color:#fff;
-
     box-shadow:
-        0 12px 35px rgba(74,94,255,.35);
-
+        0 10px 25px rgba(24, 200, 255, 0.17);
 }
 
-.btn-primary:hover{
-
-    transform:translateY(-2px);
-
+.btn-primary:hover:not(:disabled) {
     box-shadow:
-        0 18px 45px rgba(74,94,255,.45);
-
+        0 14px 30px rgba(24, 200, 255, 0.25);
 }
 
-/* Secondary */
-
-.btn-secondary{
-
-    background:rgba(255,255,255,.05);
-
-    border:1px solid rgba(255,255,255,.08);
-
+.btn-secondary {
+    color: #dce4ef;
+    background:
+        rgba(255, 255, 255, 0.055);
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
 }
 
-.btn-secondary:hover{
-
-    background:rgba(255,255,255,.08);
-
+.btn-secondary:hover:not(:disabled) {
+    background:
+        rgba(255, 255, 255, 0.09);
 }
 
-/* Outline */
-
-.btn-outline{
-
-    border:1px solid rgba(255,255,255,.12);
-
+.btn-danger {
+    color: #ffffff;
+    background:
+        linear-gradient(
+            135deg,
+            #ff5a7a,
+            #ff3d63
+        );
 }
 
-.btn-outline:hover{
+/* ======================================================
+   Icon Buttons
+   ====================================================== */
 
-    background:rgba(255,255,255,.05);
-
+.icon-btn,
+.icon-button {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #dce4ef;
+    background:
+        rgba(255, 255, 255, 0.045);
+    border:
+        1px solid rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        border-color 0.2s ease;
 }
 
-/* Danger */
-
-.btn-danger{
-
-    background:linear-gradient(
-        135deg,
-        #FF5A7A,
-        #FF2D55
-    );
-
-    color:#fff;
-
+.icon-btn:hover,
+.icon-button:hover {
+    background:
+        rgba(255, 255, 255, 0.085);
+    border-color:
+        rgba(24, 200, 255, 0.3);
+    transform: translateY(-1px);
 }
 
-/* =========================================================
-   Input System
-   ========================================================= */
+/* ======================================================
+   Cards / Glass
+   ====================================================== */
 
-.input{
-
-    width:100%;
-
-    height:56px;
-
-    padding-inline:18px;
-
-    border-radius:16px;
-
-    background:rgba(255,255,255,.04);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    transition:var(--transition);
-
-}
-
-.input:focus{
-
-    border-color:#18C8FF;
-
-    box-shadow:
-        0 0 0 4px rgba(24,200,255,.12);
-
-}
-
-/* =========================================================
-   Card
-   ========================================================= */
-
-.card{
-
-    background:rgba(255,255,255,.045);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    backdrop-filter:blur(24px);
-
-    -webkit-backdrop-filter:blur(24px);
-
-    border-radius:24px;
-
-    padding:24px;
-
-    transition:var(--transition);
-
-}
-
-.card:hover{
-
-    transform:translateY(-4px);
-
-    border-color:rgba(24,200,255,.18);
-
-}
-
-/* =========================================================
-   Badge
-   ========================================================= */
-
-.badge{
-
-    display:inline-flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    padding:8px 14px;
-
-    border-radius:999px;
-
-    font-size:.82rem;
-
-    font-weight:600;
-
-}
-
-.badge-success{
-
-    background:rgba(52,211,153,.14);
-
-    color:var(--success);
-
-}
-
-.badge-danger{
-
-    background:rgba(255,90,122,.14);
-
-    color:var(--danger);
-
-}
-
-.badge-warning{
-
-    background:rgba(251,191,36,.14);
-
-    color:var(--warning);
-
-}
-
-.badge-primary{
-
-    background:rgba(109,93,246,.14);
-
-    color:var(--primary);
-
-}
-
-/* =========================================================
-   Divider
-   ========================================================= */
-
-.divider{
-
-    width:100%;
-
-    height:1px;
-
-    background:rgba(255,255,255,.06);
-
-}
-
-/* =========================================================
-   Glass Panel
-   ========================================================= */
-
-.panel{
-
+.card,
+.glass {
+    border:
+        1px solid rgba(255, 255, 255, 0.075);
+    border-radius: 20px;
     background:
         linear-gradient(
             180deg,
-            rgba(255,255,255,.05),
-            rgba(255,255,255,.03)
+            rgba(20, 29, 45, 0.93),
+            rgba(13, 22, 36, 0.93)
         );
-
-    border:1px solid rgba(255,255,255,.08);
-
-    border-radius:28px;
-
-    backdrop-filter:blur(30px);
-
-    -webkit-backdrop-filter:blur(30px);
-
-    overflow:hidden;
-
-}
-
-/* =========================================================
-   Hover Glow
-   ========================================================= */
-
-.hover-glow{
-
-    transition:var(--transition);
-
-}
-
-.hover-glow:hover{
-
     box-shadow:
-        0 0 25px rgba(24,200,255,.15),
-        0 0 55px rgba(109,93,246,.18);
-
+        0 12px 35px rgba(0, 0, 0, 0.16);
 }
 
-/* =========================================================
-   Fade Scale
-   ========================================================= */
-
-.fade-scale{
-
-    animation:fadeScale .45s ease both;
-
+.card {
+    padding: 20px;
 }
 
-@keyframes fadeScale{
-
-    from{
-
-        opacity:0;
-
-        transform:scale(.95);
-
-    }
-
-    to{
-
-        opacity:1;
-
-        transform:scale(1);
-
-    }
-
+.glass {
+    padding: 18px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
 }
 
-/* =========================================================
-   InsightGram AI
-   CSS Part - 5
-   File : src/styles/style.css
-   Add this BELOW Part - 4
-   ========================================================= */
-
-
-/* =========================================================
-   Loading Spinner
-   ========================================================= */
-
-.loader{
-
-    width:64px;
-
-    height:64px;
-
-    border-radius:50%;
-
-    border:4px solid rgba(255,255,255,.08);
-
-    border-top-color:var(--secondary);
-
-    animation:spin .9s linear infinite;
-
+.glass.card {
+    padding: 20px;
 }
 
-@keyframes spin{
-
-    to{
-
-        transform:rotate(360deg);
-
-    }
-
+.card h1,
+.card h2,
+.card h3,
+.card h4,
+.card h5,
+.card h6 {
+    color: #f7f9fc;
 }
 
-
-/* =========================================================
-   Skeleton Loading
-   ========================================================= */
-
-.skeleton{
-
-    position:relative;
-
-    overflow:hidden;
-
-    background:rgba(255,255,255,.05);
-
+.card p,
+.card small {
+    color: #98a2b3;
 }
 
-.skeleton::before{
+/* ======================================================
+   Glow
+   ====================================================== */
 
-    content:"";
-
-    position:absolute;
-
-    inset:0;
-
-    transform:translateX(-100%);
-
-    background:
-
-        linear-gradient(
-
-            90deg,
-
-            transparent,
-
-            rgba(255,255,255,.08),
-
-            transparent
-
-        );
-
-    animation:skeletonLoading 1.5s infinite;
-
-}
-
-@keyframes skeletonLoading{
-
-    100%{
-
-        transform:translateX(100%);
-
-    }
-
-}
-
-
-/* =========================================================
-   Status Dot
-   ========================================================= */
-
-.status-dot{
-
-    width:12px;
-
-    height:12px;
-
-    border-radius:50%;
-
-}
-
-.status-online{
-
-    background:var(--success);
-
+.glow-border {
     box-shadow:
-
-        0 0 12px rgba(52,211,153,.6);
-
+        0 0 0 1px rgba(24, 200, 255, 0.07),
+        0 14px 40px rgba(24, 200, 255, 0.07);
 }
 
-.status-warning{
+/* ======================================================
+   Page Header
+   ====================================================== */
 
-    background:var(--warning);
-
+.page-header {
+    margin-bottom: 26px;
 }
 
-.status-danger{
-
-    background:var(--danger);
-
+.page-header h1 {
+    margin: 0;
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
 }
 
+.page-header p {
+    margin: 10px 0 0;
+    max-width: 760px;
+    color: #98a2b3;
+    line-height: 1.7;
+}
 
-/* =========================================================
-   Avatar
-   ========================================================= */
+/* ======================================================
+   Overview / Dashboard Grid
+   ====================================================== */
 
-.avatar{
-
-    width:56px;
-
-    height:56px;
-
-    border-radius:50%;
-
-    overflow:hidden;
-
-    flex-shrink:0;
-
-    background:
-
-        linear-gradient(
-
-            135deg,
-
-            var(--primary),
-
-            var(--secondary)
-
+.overview-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
         );
-
+    gap: 18px;
 }
 
-.avatar img{
-
-    width:100%;
-
-    height:100%;
-
-    object-fit:cover;
-
+.dashboard-grid {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.55fr)
+        minmax(320px, 0.85fr);
+    gap: 20px;
+    align-items: start;
 }
 
-
-/* =========================================================
-   Tick Animation
-   ========================================================= */
-
-.tick-success{
-
-    animation:tickSuccess .35s ease;
-
+.analytics-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+    gap: 20px;
 }
 
-@keyframes tickSuccess{
-
-    0%{
-
-        transform:scale(.4);
-
-        opacity:0;
-
-    }
-
-    70%{
-
-        transform:scale(1.15);
-
-    }
-
-    100%{
-
-        transform:scale(1);
-
-        opacity:1;
-
-    }
-
+.analytics-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 18px;
 }
 
+/* ======================================================
+   Stat Cards
+   ====================================================== */
 
-/* =========================================================
-   Pulse
-   ========================================================= */
-
-.pulse{
-
-    animation:pulse 2s infinite;
-
-}
-
-@keyframes pulse{
-
-    0%{
-
-        box-shadow:0 0 0 0 rgba(24,200,255,.5);
-
-    }
-
-    70%{
-
-        box-shadow:0 0 0 18px rgba(24,200,255,0);
-
-    }
-
-    100%{
-
-        box-shadow:0 0 0 0 rgba(24,200,255,0);
-
-    }
-
-}
-
-
-/* =========================================================
-   Scroll Reveal
-   ========================================================= */
-
-.reveal{
-
-    opacity:0;
-
-    transform:translateY(40px);
-
+.stat-card {
+    min-height: 176px;
+    cursor: default;
     transition:
-
-        opacity .8s ease,
-
-        transform .8s ease;
-
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
-.reveal.active{
-
-    opacity:1;
-
-    transform:translateY(0);
-
+.stat-card[role="button"] {
+    cursor: pointer;
 }
 
-
-/* =========================================================
-   Utility Classes
-   ========================================================= */
-
-.hidden{
-
-    display:none !important;
-
+.stat-card[role="button"]:hover {
+    transform: translateY(-3px);
+    border-color:
+        rgba(24, 200, 255, 0.22);
+    box-shadow:
+        0 18px 38px rgba(0, 0, 0, 0.22);
 }
 
-.invisible{
-
-    visibility:hidden;
-
+.stat-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
 }
 
-.pointer{
-
-    cursor:pointer;
-
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background:
+        rgba(255, 255, 255, 0.04);
 }
 
-.relative{
-
-    position:relative;
-
+.stat-card-body {
+    margin-top: 20px;
 }
 
-.absolute{
-
-    position:absolute;
-
+.stat-title {
+    margin: 0;
+    color: #98a2b3;
+    font-size: 14px;
+    font-weight: 600;
 }
 
-.fixed{
-
-    position:fixed;
-
+.stat-value {
+    margin: 8px 0 0;
+    font-size: 32px;
+    line-height: 1;
+    font-weight: 800;
 }
 
-.overflow-hidden{
-
-    overflow:hidden;
-
+.stat-description {
+    margin: 9px 0 0;
+    color: #98a2b3;
+    font-size: 13px;
 }
 
-.round{
+/* ======================================================
+   Typography
+   ====================================================== */
 
-    border-radius:999px;
-
+.gradient-text {
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #9ae9ff
+        );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
-.blur{
-
-    backdrop-filter:blur(18px);
-
-    -webkit-backdrop-filter:blur(18px);
-
+.table-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
 }
 
-.transition{
-
-    transition:var(--transition);
-
+.table-header h2 {
+    margin: 0;
 }
 
+/* ======================================================
+   Badge
+   ====================================================== */
 
-/* =========================================================
-   Print
-   ========================================================= */
-
-@media print{
-
-    body{
-
-        background:#ffffff;
-
-        color:#000000;
-
-    }
-
+.badge {
+    min-height: 28px;
+    padding: 5px 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 999px;
+    color: #dce4ef;
+    background:
+        rgba(255, 255, 255, 0.07);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
 }
 
-/* =========================================================
-   InsightGram AI
-   CSS Part - 6 (Final)
-   File : src/styles/style.css
-   Add this BELOW Part - 5
-   ========================================================= */
-
-
-/* =========================================================
-   Focus Accessibility
-   ========================================================= */
-
-:focus-visible{
-
-    outline:2px solid var(--secondary);
-
-    outline-offset:3px;
-
+.badge-primary {
+    color: #bfefff;
+    background:
+        rgba(24, 200, 255, 0.12);
 }
 
-
-/* =========================================================
-   Selection Disable
-   ========================================================= */
-
-.no-select{
-
-    user-select:none;
-
-    -webkit-user-select:none;
-
+.badge-success {
+    color: #a8f3d7;
+    background:
+        rgba(52, 211, 153, 0.13);
 }
 
-
-/* =========================================================
-   Image Rendering
-   ========================================================= */
-
-img{
-
-    image-rendering:auto;
-
+.badge-warning {
+    color: #ffe4a0;
+    background:
+        rgba(251, 191, 36, 0.13);
 }
 
-
-/* =========================================================
-   Horizontal Rule
-   ========================================================= */
-
-hr{
-
-    border:none;
-
-    height:1px;
-
-    background:rgba(255,255,255,.08);
-
+.badge-danger {
+    color: #ffb5c3;
+    background:
+        rgba(255, 90, 122, 0.13);
 }
 
+/* ======================================================
+   Inputs / Search
+   ====================================================== */
 
-/* =========================================================
-   Code
-   ========================================================= */
-
-code{
-
-    font-family:
-
-        Consolas,
-
-        "Courier New",
-
-        monospace;
-
-    color:#8EDBFF;
-
+.input,
+.search-input,
+select,
+textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 0 13px;
+    border-radius: 12px;
+    border:
+        1px solid rgba(255, 255, 255, 0.09);
+    outline: none;
+    background:
+        rgba(255, 255, 255, 0.045);
+    color: #f5f7fa;
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
 }
 
-
-/* =========================================================
-   Blockquote
-   ========================================================= */
-
-blockquote{
-
-    border-left:4px solid var(--primary);
-
-    padding-left:18px;
-
-    color:var(--text-secondary);
-
+textarea {
+    min-height: 120px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    resize: vertical;
 }
 
+.input:focus,
+.search-input:focus,
+select:focus,
+textarea:focus {
+    border-color:
+        rgba(24, 200, 255, 0.55);
+    box-shadow:
+        0 0 0 3px rgba(24, 200, 255, 0.09);
+}
 
-/* =========================================================
+.search-bar {
+    position: relative;
+}
+
+.search-input {
+    padding-left: 44px;
+}
+
+/* ======================================================
+   Filters
+   ====================================================== */
+
+.filter-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(180px, 1fr)
+        );
+    gap: 14px;
+}
+
+.filter-item {
+    display: grid;
+    gap: 7px;
+}
+
+/* ======================================================
+   Relationship Header
+   ====================================================== */
+
+.relationship-header {
+    display: grid;
+    gap: 18px;
+}
+
+.relationship-header .card {
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.relationship-header .card:hover {
+    transform: translateY(-2px);
+    border-color:
+        rgba(24, 200, 255, 0.24);
+}
+
+/* ======================================================
    Tables
-   ========================================================= */
+   ====================================================== */
 
-table{
-
-    width:100%;
-
-    border-collapse:collapse;
-
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
 }
 
-thead{
-
-    background:rgba(255,255,255,.04);
-
+.relationship-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 760px;
 }
 
-th,
-td{
-
-    padding:16px;
-
-    text-align:left;
-
-    border-bottom:1px solid rgba(255,255,255,.06);
-
+.relationship-table th,
+.relationship-table td {
+    padding: 14px 12px;
+    text-align: left;
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.06);
 }
 
-tbody tr{
-
-    transition:var(--transition);
-
+.relationship-table th {
+    color: #aeb8c8;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    background:
+        rgba(255, 255, 255, 0.025);
 }
 
-tbody tr:hover{
-
-    background:rgba(255,255,255,.03);
-
+.relationship-table td {
+    color: #eef2f7;
+    font-size: 14px;
 }
 
-
-/* =========================================================
-   Smooth Fade
-   ========================================================= */
-
-.fade{
-
-    animation:fade .4s ease;
-
+.relationship-table tbody tr {
+    transition:
+        background 0.2s ease;
 }
 
-@keyframes fade{
+.relationship-table tbody tr:hover {
+    background:
+        rgba(255, 255, 255, 0.025);
+}
 
-    from{
+/* ======================================================
+   Pagination
+   ====================================================== */
 
-        opacity:0;
+.table-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
 
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+/* ======================================================
+   Upload
+   ====================================================== */
+
+.upload-section {
+    display: grid;
+    gap: 20px;
+}
+
+.upload-zone {
+    min-height: 280px;
+    padding: 38px;
+    border-radius: 24px;
+    border:
+        1px dashed rgba(24, 200, 255, 0.30);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(24, 200, 255, 0.06),
+            transparent 55%
+        ),
+        rgba(255, 255, 255, 0.02);
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.upload-zone:hover {
+    border-color:
+        rgba(24, 200, 255, 0.60);
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(24, 200, 255, 0.10),
+            transparent 58%
+        ),
+        rgba(255, 255, 255, 0.025);
+}
+
+.upload-icon {
+    width: 76px;
+    height: 76px;
+    margin: 0 auto 18px;
+    border-radius: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #18c8ff;
+    background:
+        rgba(24, 200, 255, 0.10);
+}
+
+.upload-features {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            3,
+            minmax(0, 1fr)
+        );
+    gap: 14px;
+}
+
+.upload-feature {
+    padding: 16px;
+    border-radius: 15px;
+    background:
+        rgba(255, 255, 255, 0.035);
+    border:
+        1px solid rgba(255, 255, 255, 0.06);
+}
+
+.upload-footer {
+    padding: 16px;
+    border-radius: 16px;
+    color: #98a2b3;
+    background:
+        rgba(255, 255, 255, 0.025);
+}
+
+/* ======================================================
+   AI
+   ====================================================== */
+
+.ai-summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.ai-score {
+    flex-shrink: 0;
+}
+
+.ai-details {
+    min-width: 0;
+}
+
+.ai-details h3 {
+    margin: 0;
+}
+
+.ai-details p {
+    margin: 8px 0 0;
+    color: #98a2b3;
+    line-height: 1.65;
+}
+
+/* ======================================================
+   Settings
+   ====================================================== */
+
+.settings-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        );
+    gap: 20px;
+}
+
+.setting-item {
+    padding: 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.06);
+}
+
+.setting-item:last-child {
+    border-bottom: 0;
+}
+
+/* ======================================================
+   Status
+   ====================================================== */
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.status-online {
+    background: #34d399;
+    box-shadow:
+        0 0 0 5px rgba(52, 211, 153, 0.08);
+}
+
+/* ======================================================
+   Loading
+   ====================================================== */
+
+.loader {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border:
+        3px solid rgba(255, 255, 255, 0.12);
+    border-top-color: #18c8ff;
+    animation:
+        spin 0.8s linear infinite;
+}
+
+.spin {
+    animation:
+        spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ======================================================
+   Animations
+   ====================================================== */
+
+.fade {
+    animation:
+        fadeIn 0.35s ease;
+}
+
+.fade-scale {
+    animation:
+        fadeScale 0.35s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
     }
 
-    to{
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
-        opacity:1;
+@keyframes fadeScale {
+    from {
+        opacity: 0;
+        transform: scale(0.985);
+    }
 
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ======================================================
+   Empty State
+   ====================================================== */
+
+.empty-state {
+    min-height: 240px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #98a2b3;
+}
+
+/* ======================================================
+   Responsive
+   ====================================================== */
+
+@media (max-width: 1180px) {
+
+    .sidebar {
+        width: 220px;
+        min-width: 220px;
+    }
+
+    .dashboard-content {
+        padding: 22px;
+    }
+
+    .overview-grid {
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+    }
+
+    .dashboard-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .analytics-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .settings-grid {
+        grid-template-columns:
+            1fr;
     }
 
 }
 
+@media (max-width: 820px) {
 
-/* =========================================================
-   Rotate
-   ========================================================= */
-
-.rotate{
-
-    animation:rotate 12s linear infinite;
-
-}
-
-@keyframes rotate{
-
-    from{
-
-        transform:rotate(0deg);
-
+    .dashboard-layout {
+        display: block;
     }
 
-    to{
-
-        transform:rotate(360deg);
-
+    .sidebar {
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        min-height: auto;
+        position: relative;
+        border-right: 0;
+        border-bottom:
+            1px solid rgba(255, 255, 255, 0.08);
     }
 
-}
-
-
-/* =========================================================
-   Scale Hover
-   ========================================================= */
-
-.scale-hover{
-
-    transition:var(--transition);
-
-}
-
-.scale-hover:hover{
-
-    transform:scale(1.04);
-
-}
-
-
-/* =========================================================
-   Fade Hover
-   ========================================================= */
-
-.opacity-hover{
-
-    transition:var(--transition);
-
-}
-
-.opacity-hover:hover{
-
-    opacity:.82;
-
-}
-
-
-/* =========================================================
-   Responsive Font Scaling
-   ========================================================= */
-
-@media (max-width:992px){
-
-    html{
-
-        font-size:15px;
-
+    .sidebar-header {
+        padding:
+            16px 16px 10px;
     }
 
-}
+    .sidebar .logo {
+        min-height:
+            90px;
+    }
 
-@media (max-width:768px){
+    .sidebar-nav {
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding:
+            5px 12px 12px;
+    }
 
-    html{
+    .sidebar-menu {
+        display: flex;
+        gap: 6px;
+        width: max-content;
+    }
 
-        font-size:14px;
+    .sidebar-item {
+        width: auto;
+    }
 
+    .sidebar-link {
+        min-width: max-content;
+    }
+
+    .sidebar-footer {
+        display: none;
+    }
+
+    .topbar {
+        position: relative;
+        padding:
+            14px 16px;
+    }
+
+    .topbar-right {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .dashboard-content {
+        padding: 18px 16px;
+    }
+
+    .overview-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+    .upload-features {
+        grid-template-columns:
+            1fr;
     }
 
 }
 
-@media (max-width:480px){
+@media (max-width: 560px) {
 
-    html{
+    .page-header h1 {
+        font-size: 30px;
+    }
 
-        font-size:13px;
+    .card {
+        padding: 16px;
+        border-radius: 17px;
+    }
 
+    .stat-value {
+        font-size: 28px;
+    }
+
+    .topbar-right {
+        align-items: stretch;
+    }
+
+    .topbar-right .btn {
+        flex: 1;
+    }
+
+    .topbar-right > .card {
+        width: 100%;
+        min-width: 0 !important;
+        max-width: none !important;
+    }
+
+    .ai-summary {
+        flex-direction: column;
+    }
+
+    .upload-zone {
+        min-height: 230px;
+        padding: 24px 16px;
     }
 
 }
-
-
-/* =========================================================
-   Reduced Motion
-   ========================================================= */
-
-@media (prefers-reduced-motion:reduce){
-
-    *{
-
-        animation:none !important;
-
-        transition:none !important;
-
-        scroll-behavior:auto !important;
-
-    }
-
-}
-
-
-/* =========================================================
-   End of CSS
-   ========================================================= */

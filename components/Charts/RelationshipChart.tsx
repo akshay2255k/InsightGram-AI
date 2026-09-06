@@ -1,9 +1,3 @@
-// ======================================================
-// InsightGram AI
-// File : src/components/Charts/RelationshipChart.tsx
-// Part : 1
-// ======================================================
-
 import {
     ArcElement,
     Chart as ChartJS,
@@ -12,7 +6,6 @@ import {
 } from "chart.js";
 
 import { Doughnut } from "react-chartjs-2";
-
 import { useMemo } from "react";
 
 import { useAppStore } from "../../store/appStore";
@@ -25,22 +18,15 @@ ChartJS.register(
 
 export default function RelationshipChart() {
 
-    const {
-
-        statistics,
-
-    } = useAppStore();
+    const { statistics } = useAppStore();
 
     const data = useMemo(() => {
 
         if (!statistics) {
 
             return {
-
                 labels: [],
-
                 datasets: [],
-
             };
 
         }
@@ -48,69 +34,57 @@ export default function RelationshipChart() {
         return {
 
             labels: [
-
                 "Mutual",
-
                 "Not Following Back",
-
                 "You Don't Follow Back",
-
             ],
 
             datasets: [
-
                 {
-
                     data: [
-
                         statistics.mutual,
-
                         statistics.notFollowingBack,
-
                         statistics.youDontFollowBack,
-
                     ],
 
                     backgroundColor: [
-
                         "#34D399",
-
                         "#FF5A7A",
-
                         "#18C8FF",
-
                     ],
 
                     borderColor: [
-
                         "#34D399",
-
                         "#FF5A7A",
-
                         "#18C8FF",
-
                     ],
 
                     borderWidth: 2,
 
-                    hoverOffset: 10,
+                    hoverOffset: 8,
 
                 },
-
             ],
 
         };
 
     }, [statistics]);
 
-    const hasData =
-        !!statistics;
-
     return (
 
-        <section className="card">
+        <section
+            className="card"
+            style={{
+                height: "fit-content",
+            }}
+        >
 
-            <div className="table-header">
+            <div
+                className="table-header"
+                style={{
+                    marginBottom: "20px",
+                }}
+            >
 
                 <h2>
 
@@ -119,30 +93,37 @@ export default function RelationshipChart() {
                 </h2>
 
             </div>
-            // ======================================================
-// InsightGram AI
-// File : src/components/Charts/RelationshipChart.tsx
-// Part : 2
-// ======================================================
 
-            {hasData ? (
+            {statistics ? (
 
-                <Doughnut
-                    data={data}
-                    options={{
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: {
-                                position: "bottom",
-                            },
-                            tooltip: {
-                                enabled: true,
-                            },
-                        },
+                <div
+                    style={{
+                        position: "relative",
+                        width: "100%",
+                        height: "340px",
+                        maxHeight: "340px",
+                        overflow: "hidden",
                     }}
-                    height={340}
-                />
+                >
+
+                    <Doughnut
+                        data={data}
+                        options={{
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            animation: false,
+                            plugins: {
+                                legend: {
+                                    position: "bottom",
+                                },
+                                tooltip: {
+                                    enabled: true,
+                                },
+                            },
+                        }}
+                    />
+
+                </div>
 
             ) : (
 
@@ -158,8 +139,7 @@ export default function RelationshipChart() {
 
                     <p>
 
-                        Upload an Instagram ZIP to
-                        view relationship statistics.
+                        Upload an Instagram ZIP to view relationship statistics.
 
                     </p>
 

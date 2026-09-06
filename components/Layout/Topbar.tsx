@@ -1,184 +1,279 @@
 // ======================================================
 // InsightGram AI
 // File : src/components/Layout/Topbar.tsx
-// Part : 1
 // ======================================================
 
 import {
-    Bell,
-    Brain,
     Moon,
-    Search,
     Sun,
     Upload,
-    UserCircle2
+    FileArchive,
 } from "lucide-react";
 
-import { useAppStore } from "../../store/appStore";
+import {
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 
-interface TopbarProps {
+import themeService, {
+    type AppTheme,
+} from "../../services/themeService";
 
-    onUploadClick?: () => void;
+import {
+    useInstagramZip,
+} from "../../hooks/useInstagramZip";
 
-    darkMode?: boolean;
+import {
+    useAppStore,
+} from "../../store/appStore";
 
-    onToggleTheme?: () => void;
-
-}
-
-export default function Topbar({
-
-    onUploadClick,
-
-    darkMode = true,
-
-    onToggleTheme,
-
-}: TopbarProps) {
+export default function Topbar() {
 
     const {
-
-        statistics,
-
         currentFileName,
-
         uploadedAt,
-
     } = useAppStore();
+
+    const {
+        uploadZip,
+        loading,
+    } =
+        useInstagramZip();
+
+    const [
+        theme,
+        setTheme,
+    ] =
+        useState<AppTheme>(
+            "dark"
+        );
+
+    const fileInputRef =
+        useRef<HTMLInputElement | null>(
+            null
+        );
+
+    useEffect(() => {
+
+        setTheme(
+            themeService.initialize()
+        );
+
+    }, []);
+
+    // ======================================================
+    // Theme
+    // ======================================================
+
+    const handleThemeToggle =
+        () => {
+
+            const next =
+                themeService.toggle();
+
+            setTheme(
+                next
+            );
+
+        };
+
+    // ======================================================
+    // Upload
+    // ======================================================
+
+    const handleUploadClick =
+        () => {
+
+            if (
+                loading
+            ) {
+
+                return;
+
+            }
+
+            fileInputRef
+                .current
+                ?.click();
+
+        };
+
+    const handleFileChange =
+        async (
+            event:
+                React.ChangeEvent<HTMLInputElement>
+        ) => {
+
+            const file =
+                event.target.files?.[0];
+
+            event.target.value =
+                "";
+
+            if (!file) {
+
+                return;
+
+            }
+
+            await uploadZip(
+                file
+            );
+
+        };
 
     return (
 
-        <header className="topbar glass">
+        <header
+            className="topbar glass"
+        >
 
-            <div className="topbar-left">
+            <input
+                ref={
+                    fileInputRef
+                }
+                type="file"
+                accept=".zip,application/zip"
+                onChange={
+                    handleFileChange
+                }
+                style={{
+                    display:
+                        "none",
+                }}
+            />
 
-                <div className="search-box">
+            <div
+                className="topbar-right"
+            >
 
-                    <Search
-                        size={18}
-                    />
-
-                    <input
-                        type="text"
-                        placeholder="Search username..."
-                    />
-
-                </div>
-
-            </div>
-
-            <div className="topbar-right">
+                {/* Theme */}
 
                 <button
+                    type="button"
                     className="icon-btn"
-                    onClick={onToggleTheme}
+                    onClick={
+                        handleThemeToggle
+                    }
+                    title={
+                        theme ===
+                        "dark"
+                            ? "Switch to light theme"
+                            : "Switch to dark theme"
+                    }
+                    aria-label={
+                        "Toggle theme"
+                    }
                 >
 
-                    {darkMode
-                        ? <Sun size={18}/>
-                        : <Moon size={18}/>
-                    }
+                    {theme ===
+                    "dark" ? (
+
+                        <Sun
+                            size={
+                                19
+                            }
+                        />
+
+                    ) : (
+
+                        <Moon
+                            size={
+                                19
+                            }
+                        />
+
+                    )}
 
                 </button>
 
+                {/* Upload */}
+
                 <button
-                    className="icon-btn relative"
+                    type="button"
+                    className="btn btn-primary"
+                    onClick={
+                        handleUploadClick
+                    }
+                    disabled={
+                        loading
+                    }
+                    style={{
+                        opacity:
+                            loading
+                                ? 0.7
+                                : 1,
+                    }}
                 >
 
-                    <Bell size={18}/>
-
-                    <span
-                        className="status-dot status-online"
-                        style={{
-                            position:"absolute",
-                            top:10,
-                            right:10,
-                            width:8,
-                            height:8
-                        }}
+                    <Upload
+                        size={
+                            18
+                        }
                     />
 
-                </button>
-
-                <button
-                    className="btn btn-primary"
-                    onClick={onUploadClick}
-                >
-
-                    <Upload size={18}/>
-
-                    Upload ZIP
+                    {loading
+                        ? "Processing..."
+                        : "Upload ZIP"}
 
                 </button>
-                // ======================================================
-// InsightGram AI
-// File : src/components/Layout/Topbar.tsx
-// Part : 2
-// ======================================================
+
+                {/* Current Export */}
 
                 <div
                     className="card"
                     style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "14px",
-                        padding: "10px 16px",
+                        display:
+                            "flex",
+                        alignItems:
+                            "center",
+                        gap:
+                            "12px",
+                        padding:
+                            "10px 16px",
+                        minWidth:
+                            "250px",
+                        maxWidth:
+                            "400px",
                     }}
                 >
 
-                    <Brain
-                        size={18}
+                    <FileArchive
+                        size={
+                            30
+                        }
                     />
 
-                    <div>
+                    <div
+                        style={{
+                            minWidth:
+                                0,
+                        }}
+                    >
 
-                        <strong>
-                            AI Ready
-                        </strong>
-
-                        <div
+                        <strong
                             style={{
-                                fontSize: "12px",
-                                opacity: 0.7,
+                                display:
+                                    "block",
+                                overflow:
+                                    "hidden",
+                                textOverflow:
+                                    "ellipsis",
+                                whiteSpace:
+                                    "nowrap",
                             }}
                         >
 
-                            {statistics
-                                ? `${statistics.relationshipScore}% Relationship Score`
-                                : "Waiting for Instagram ZIP"}
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div
-                    className="card"
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "12px",
-                        padding: "10px 16px",
-                    }}
-                >
-
-                    <UserCircle2
-                        size={34}
-                    />
-
-                    <div>
-
-                        <strong>
-
-                            {currentFileName ?? "No File"}
+                            {currentFileName ??
+                                "No ZIP uploaded"}
 
                         </strong>
 
-                        <div
+                        <small
                             style={{
-                                fontSize: "12px",
-                                opacity: 0.7,
+                                color:
+                                    "#98A2B3",
                             }}
                         >
 
@@ -186,9 +281,9 @@ export default function Topbar({
                                 ? new Date(
                                       uploadedAt
                                   ).toLocaleString()
-                                : "No upload yet"}
+                                : "Ready for import"}
 
-                        </div>
+                        </small>
 
                     </div>
 

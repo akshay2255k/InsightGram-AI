@@ -1,193 +1,455 @@
 // ======================================================
 // InsightGram AI
 // File : src/services/exportService.ts
-// Part : 1
 // ======================================================
 
 import type {
     DashboardStatistics,
-    InstagramExport,
     InstagramUser,
 } from "../types/instagram";
 
-import { downloadFile } from "../utils/helpers";
+export interface ExportData {
 
-function flattenUsers(
-    data: InstagramExport
-): InstagramUser[] {
+    users: InstagramUser[];
 
-    return [
+    statistics: DashboardStatistics;
 
-        ...data.followers,
+    generatedAt?: string;
 
-        ...data.following,
-
-        ...data.pendingRequests,
-
-        ...data.recentRequests,
-
-        ...data.recentlyUnfollowed,
-
-        ...data.closeFriends,
-
-    ];
+    fileName?: string;
 
 }
 
-export function exportAsJSON(
-    data: InstagramExport
-): void {
+class ExportService {
 
-    downloadFile(
+    private getTimestamp(): string {
 
-        "instagram-export.json",
+        const now = new Date();
 
-        JSON.stringify(
-            data,
-            null,
-            2
-        ),
+        const date = [
+            now.getFullYear(),
+            String(
+                now.getMonth() + 1
+            ).padStart(2, "0"),
+            String(
+                now.getDate()
+            ).padStart(2, "0"),
+        ].join("-");
 
-        "application/json"
+        const time = [
+            String(
+                now.getHours()
+            ).padStart(2, "0"),
+            String(
+                now.getMinutes()
+            ).padStart(2, "0"),
+            String(
+                now.getSeconds()
+            ).padStart(2, "0"),
+        ].join("-");
 
-    );
+        return `${date}_${time}`;
 
-}
+    }
 
-export function exportAsCSV(
-    data: InstagramExport
-): void {
+    private download(
+        content: BlobPart,
+        type: string,
+        fileName: string
+    ): void {
 
-    const users =
-        flattenUsers(data);
+        const blob = new Blob(
+            [content],
+            {
+                type,
+            }
+        );
 
-    const rows = [
+        const url =
+            URL.createObjectURL(blob);
 
-        [
+        const link =
+            document.createElement("a");
+
+        link.href = url;
+
+        link.download = fileName;
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        document.body.removeChild(link);
+
+        URL.revokeObjectURL(url);
+
+    }
+
+    // ======================================================
+    // CSV
+    // ======================================================
+
+    exportCSV(
+        data: ExportData
+    ): void {
+
+        const headers = [
+
             "Username",
-            "Profile URL",
             "Follows You",
             "You Follow",
             "Pending",
             "Recent Request",
             "Recently Unfollowed",
             "Close Friend",
-        ].join(","),
+            "Reviewed",
+            "Favorite",
+            "Pinned",
+            "Label",
+            "Note",
+            "Profile URL",
 
-    ];
+        ];
 
-    users.forEach((user) => {
+        const rows =
+            data.users.map(
+                (user) => [
 
-        rows.push(
+                    user.username,
 
-            [
+                    user.followsYou
+                        ? "Yes"
+                        : "No",
 
-                user.username,
+                    user.youFollow
+                        ? "Yes"
+                        : "No",
 
-                user.profileUrl,
+                    user.isPending
+                        ? "Yes"
+                        : "No",
 
-                user.followsYou,
+                    user.isRecentRequest
+                        ? "Yes"
+                        : "No",
 
-                user.youFollow,
+                    user.isRecentlyUnfollowed
+                        ? "Yes"
+                        : "No",
 
-                user.isPending ?? false,
+                    user.isCloseFriend
+                        ? "Yes"
+                        : "No",
 
-                user.isRecentRequest ?? false,
+                    user.reviewed
+                        ? "Yes"
+                        : "No",
 
-                user.isRecentlyUnfollowed ?? false,
+                    user.favorite
+                        ? "Yes"
+                        : "No",
 
-                user.isCloseFriend ?? false,
+                    user.pinned
+                        ? "Yes"
+                        : "No",
 
-            ].join(",")
+                    user.label ?? "",
+
+                    user.note ?? "",
+
+                    user.profileUrl,
+
+                ]
+            );
+
+        const csv = [
+
+            headers,
+            ...rows,
+
+        ]
+            .map(
+                (row) =>
+                    row
+                        .map(
+                            (value) =>
+                                `"${String(
+                                    value
+                                ).replace(
+                                    /"/g,
+                                    '""'
+                                )}"`
+                        )
+                        .join(",")
+            )
+            .join("\r\n");
+
+        this.download(
+
+            csv,
+
+            "text/csv;charset=utf-8;",
+
+            `InsightGram_Report_${this.getTimestamp()}.csv`
 
         );
 
+    }
+
+    // ======================================================
+    // JSON
+    // ======================================================
+
+    exportJSON(
+        data: ExportData
+    ): void {
+
+        const backup = {
+
+            application:
+                "InsightGram AI",
+
+            version:
+                "1.0.0",
+
+            generatedAt:
+                data.generatedAt ??
+                new Date().toISOString(),
+
+            fileName:
+                data.fileName ??
+                null,
+
+            statistics:
+                data.statistics,
+
+            users:
+                data.users,
+
+        };
+
+        const json =
+            JSON.stringify(
+                backup,
+                null,
+                2
+            );
+
+        this.download(
+
+            json,
+
+            "application/json",
+
+            `InsightGram_Backup_${this.getTimestamp()}.json`
+
+        );
+
+    }
+
+    // ======================================================
+    // Text Summary
+    // ======================================================
+
+    exportSummary(
+        data: ExportData
+    ): void {
+
+        const s =
+            data.statistics;
+
+        const report = [
+
+            "InsightGram AI Report",
+
+            "=====================",
+
+            "",
+
+            `Generated: ${new Date(
+                data.generatedAt ??
+                new Date().toISOString()
+            ).toLocaleString()}`,
+
+            `File: ${
+                data.fileName ??
+                "Instagram Export"
+            }`,
+
+            "",
+
+            `Followers: ${s.followers}`,
+
+            `Following: ${s.following}`,
+
+            `Mutual: ${s.mutual}`,
+
+            `Not Following Back: ${s.notFollowingBack}`,
+
+            `You Don't Follow Back: ${s.youDontFollowBack}`,
+
+            `Pending Requests: ${s.pendingRequests}`,
+
+            `Recent Requests: ${s.recentRequests}`,
+
+            `Recently Unfollowed: ${s.recentlyUnfollowed}`,
+
+            `Close Friends: ${s.closeFriends}`,
+
+            `Relationship Score: ${s.relationshipScore}%`,
+
+            "",
+
+            "Generated by InsightGram AI",
+
+        ].join("\r\n");
+
+        this.download(
+
+            report,
+
+            "text/plain;charset=utf-8;",
+
+            `InsightGram_Summary_${this.getTimestamp()}.txt`
+
+        );
+
+    }
+
+    // ======================================================
+    // Export All
+    // ======================================================
+
+    exportAll(
+        data: ExportData
+    ): void {
+
+        this.exportCSV(data);
+
+        this.exportJSON(data);
+
+        this.exportSummary(data);
+
+    }
+
+    // ======================================================
+    // Copy Summary
+    // ======================================================
+
+    async copySummary(
+        data: ExportData
+    ): Promise<void> {
+
+        const s =
+            data.statistics;
+
+        const text = [
+
+            "InsightGram AI",
+
+            "",
+
+            `Followers: ${s.followers}`,
+
+            `Following: ${s.following}`,
+
+            `Mutual: ${s.mutual}`,
+
+            `Not Following Back: ${s.notFollowingBack}`,
+
+            `You Don't Follow Back: ${s.youDontFollowBack}`,
+
+            `Pending Requests: ${s.pendingRequests}`,
+
+            `Recent Requests: ${s.recentRequests}`,
+
+            `Recently Unfollowed: ${s.recentlyUnfollowed}`,
+
+            `Close Friends: ${s.closeFriends}`,
+
+            `Relationship Score: ${s.relationshipScore}%`,
+
+        ].join("\n");
+
+        if (
+            !navigator.clipboard
+        ) {
+
+            throw new Error(
+                "Clipboard API is not available."
+            );
+
+        }
+
+        await navigator.clipboard.writeText(
+            text
+        );
+
+    }
+
+}
+
+// ======================================================
+// Service Instance
+// ======================================================
+
+export const exportService =
+    new ExportService();
+
+// ======================================================
+// Backward-compatible named exports
+// ======================================================
+
+export const exportAsCSV = (
+    data: ExportData
+): void => {
+
+    exportService.exportCSV(data);
+
+};
+
+export const exportAsJSON = (
+    data: ExportData
+): void => {
+
+    exportService.exportJSON(data);
+
+};
+
+export const exportAsPDF = async (
+    data: ExportData
+): Promise<void> => {
+
+    const {
+        default: pdfService,
+    } = await import(
+        "./pdfService"
+    );
+
+    await pdfService.generate({
+
+        users:
+            data.users,
+
+        statistics:
+            data.statistics,
+
+        fileName:
+            data.fileName,
+
+        generatedAt:
+            data.generatedAt,
+
     });
 
-    downloadFile(
+};
 
-        "instagram-export.csv",
+export const exportAll = (
+    data: ExportData
+): void => {
 
-        rows.join("\n"),
+    exportService.exportAll(data);
 
-        "text/csv"
+};
 
-    );
-
-}
-// ======================================================
-// InsightGram AI
-// File : src/services/exportService.ts
-// Part : 2
-// ======================================================
-
-export function exportAsPDF(
-    data: InstagramExport,
-    statistics: DashboardStatistics
-): void {
-
-    const lines = [
-
-        "InsightGram AI Report",
-
-        "========================",
-
-        "",
-
-        `Followers            : ${statistics.followers}`,
-
-        `Following            : ${statistics.following}`,
-
-        `Mutual               : ${statistics.mutual}`,
-
-        `Not Following Back   : ${statistics.notFollowingBack}`,
-
-        `You Don't Follow Back: ${statistics.youDontFollowBack}`,
-
-        `Pending Requests     : ${statistics.pendingRequests}`,
-
-        `Recent Requests      : ${statistics.recentRequests}`,
-
-        `Recently Unfollowed  : ${statistics.recentlyUnfollowed}`,
-
-        `Close Friends        : ${statistics.closeFriends}`,
-
-        `Relationship Score   : ${statistics.relationshipScore}%`,
-
-        "",
-
-        "Dataset Summary",
-
-        "------------------------",
-
-        `Followers Records     : ${data.followers.length}`,
-
-        `Following Records     : ${data.following.length}`,
-
-        `Pending Records       : ${data.pendingRequests.length}`,
-
-        `Recent Requests       : ${data.recentRequests.length}`,
-
-        `Recently Unfollowed   : ${data.recentlyUnfollowed.length}`,
-
-        `Close Friends         : ${data.closeFriends.length}`,
-
-        "",
-
-        `Generated At: ${new Date().toLocaleString()}`,
-
-        "Generated by InsightGram AI",
-
-    ];
-
-    downloadFile(
-
-        "instagram-report.pdf",
-
-        lines.join("\n"),
-
-        "application/pdf"
-
-    );
-
-}
+export default exportService;

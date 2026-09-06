@@ -1,8 +1,3 @@
-// ======================================================
-// InsightGram AI
-// File : src/components/Settings/SettingsPanel.tsx
-// Part : 1
-// ======================================================
 
 import { useState } from "react";
 
@@ -105,11 +100,6 @@ export default function SettingsPanel() {
                     </button>
 
                 </div>
-                // ======================================================
-// InsightGram AI
-// File : src/components/Settings/SettingsPanel.tsx
-// Part : 2
-// ======================================================
 
                 <div className="setting-item">
 
@@ -178,11 +168,6 @@ export default function SettingsPanel() {
                     </button>
 
                 </div>
-                // ======================================================
-// InsightGram AI
-// File : src/components/Settings/SettingsPanel.tsx
-// Part : 3
-// ======================================================
 
             </div>
 

@@ -1,10 +1,11 @@
 // ======================================================
 // InsightGram AI
 // File : src/components/Dashboard/StatCard.tsx
-// Part : 1
 // ======================================================
 
-import type { ReactNode } from "react";
+import type {
+    ReactNode,
+} from "react";
 
 import {
     ArrowUpRight,
@@ -15,7 +16,9 @@ interface StatCardProps {
 
     title: string;
 
-    value: number | string;
+    value:
+        | number
+        | string;
 
     icon: ReactNode;
 
@@ -24,6 +27,8 @@ interface StatCardProps {
     change?: number;
 
     description?: string;
+
+    onClick?: () => void;
 
 }
 
@@ -41,15 +46,70 @@ export default function StatCard({
 
     description,
 
+    onClick,
+
 }: StatCardProps) {
 
     const positive =
         (change ?? 0) >= 0;
 
+    const clickable =
+        Boolean(onClick);
+
     return (
 
         <div
+
             className="card stat-card glow-border fade-scale"
+
+            role={
+                clickable
+                    ? "button"
+                    : undefined
+            }
+
+            tabIndex={
+                clickable
+                    ? 0
+                    : undefined
+            }
+
+            onClick={
+                onClick
+            }
+
+            onKeyDown={
+                clickable
+                    ? (
+                        event
+                    ) => {
+
+                        if (
+                            event.key ===
+                                "Enter" ||
+                            event.key ===
+                                " "
+                        ) {
+
+                            event.preventDefault();
+
+                            onClick?.();
+
+                        }
+
+                    }
+                    : undefined
+            }
+
+            style={{
+
+                cursor:
+                    clickable
+                        ? "pointer"
+                        : "default",
+
+            }}
+
         >
 
             <div
@@ -67,6 +127,15 @@ export default function StatCard({
 
                 </div>
 
+                {clickable && (
+
+                    <ArrowUpRight
+                        size={17}
+                        color={color}
+                    />
+
+                )}
+
                 {typeof change ===
                     "number" && (
 
@@ -79,16 +148,22 @@ export default function StatCard({
                     >
 
                         {positive ? (
+
                             <ArrowUpRight
                                 size={14}
                             />
+
                         ) : (
+
                             <ArrowDownRight
                                 size={14}
                             />
+
                         )}
 
-                        {Math.abs(change)}%
+                        {Math.abs(
+                            change
+                        )}%
 
                     </div>
 
@@ -96,12 +171,9 @@ export default function StatCard({
 
             </div>
 
-            <div className="stat-card-body">
-                // ======================================================
-// InsightGram AI
-// File : src/components/Dashboard/StatCard.tsx
-// Part : 2
-// ======================================================
+            <div
+                className="stat-card-body"
+            >
 
                 <h3
                     className="stat-title"

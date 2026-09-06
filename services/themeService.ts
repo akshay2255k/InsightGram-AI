@@ -3,153 +3,107 @@
 // File : src/services/themeService.ts
 // ======================================================
 
-import {
-    darkTheme,
-    getTheme,
-    lightTheme,
-    type ThemeMode,
-    type AppTheme,
-} from "../constants/theme";
+export type AppTheme =
+    | "dark"
+    | "light";
 
 const STORAGE_KEY =
-    "insightgram-theme";
+    "insightgram_theme";
 
-export function getCurrentTheme(): AppTheme {
+class ThemeService {
 
-    const mode = getThemeMode();
+    getTheme(): AppTheme {
 
-    return getTheme(mode);
+        const stored =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
 
-}
+        if (
+            stored === "light" ||
+            stored === "dark"
+        ) {
 
-export function getThemeMode(): ThemeMode {
+            return stored;
 
-    const stored =
-        localStorage.getItem(
-            STORAGE_KEY
-        ) as ThemeMode | null;
+        }
 
-    if (
-        stored === "light" ||
-        stored === "dark" ||
-        stored === "system"
-    ) {
-
-        return stored;
+        return "dark";
 
     }
 
-    return "system";
+    setTheme(
+        theme: AppTheme
+    ): void {
 
-}
-
-export function setThemeMode(
-    mode: ThemeMode
-): void {
-
-    localStorage.setItem(
-        STORAGE_KEY,
-        mode
-    );
-
-    applyTheme(mode);
-
-}
-
-export function applyTheme(
-    mode: ThemeMode
-): void {
-
-    const theme =
-        getTheme(mode);
-
-    const root =
-        document.documentElement;
-
-    root.dataset.theme =
-        theme.name;
-
-    Object.entries(
-        theme.colors
-    ).forEach(
-        ([key, value]) => {
-
-            root.style.setProperty(
-                `--${key}`,
-                value
-            );
-
-        }
-    );
-
-}
-
-export function toggleTheme(): ThemeMode {
-
-    const current =
-        getThemeMode();
-
-    const next: ThemeMode =
-        current === "dark"
-            ? "light"
-            : "dark";
-
-    setThemeMode(next);
-
-    return next;
-
-}
-
-export function initializeTheme(): void {
-
-    applyTheme(
-        getThemeMode()
-    );
-
-    window
-        .matchMedia(
-            "(prefers-color-scheme: dark)"
-        )
-        .addEventListener(
-            "change",
-            () => {
-
-                if (
-                    getThemeMode() ===
-                    "system"
-                ) {
-
-                    applyTheme(
-                        "system"
-                    );
-
-                }
-
-            }
+        localStorage.setItem(
+            STORAGE_KEY,
+            theme
         );
 
+        this.applyTheme(
+            theme
+        );
+
+    }
+
+    toggle(): AppTheme {
+
+        const current =
+            this.getTheme();
+
+        const next:
+            AppTheme =
+            current === "dark"
+                ? "light"
+                : "dark";
+
+        this.setTheme(
+            next
+        );
+
+        return next;
+
+    }
+
+    initialize(): AppTheme {
+
+        const theme =
+            this.getTheme();
+
+        this.applyTheme(
+            theme
+        );
+
+        return theme;
+
+    }
+
+    private applyTheme(
+        theme: AppTheme
+    ): void {
+
+        document.documentElement
+            .setAttribute(
+                "data-theme",
+                theme
+            );
+
+        document.body.classList.toggle(
+            "theme-light",
+            theme === "light"
+        );
+
+        document.body.classList.toggle(
+            "theme-dark",
+            theme === "dark"
+        );
+
+    }
+
 }
 
-export {
+export const themeService =
+    new ThemeService();
 
-    darkTheme,
-
-    lightTheme,
-
-};
-
-export default {
-
-    getCurrentTheme,
-
-    getThemeMode,
-
-    setThemeMode,
-
-    applyTheme,
-
-    toggleTheme,
-
-    initializeTheme,
-
-};
+export default themeService;

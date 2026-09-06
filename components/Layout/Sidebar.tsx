@@ -1,245 +1,331 @@
 // ======================================================
 // InsightGram AI
 // File : src/components/Layout/Sidebar.tsx
-// Part : 1
 // ======================================================
 
-import { NavLink } from "react-router-dom";
+import {
+    NavLink,
+} from "react-router-dom";
 
 import {
-    Home,
     LayoutDashboard,
     Users,
     UserRoundPlus,
-    Brain,
     BarChart3,
-    History,
     GitCompareArrows,
     Download,
     Settings,
-    Star,
-    Tag,
-    StickyNote
 } from "lucide-react";
 
-import { ROUTES } from "../../routes";
+import {
+    ROUTES,
+} from "../../routes";
+
+import logo from "../../logo.png";
 
 const navigation = [
+
     {
-        title: "Dashboard",
-        icon: LayoutDashboard,
-        path: ROUTES.HOME,
+        title:
+            "Dashboard",
+
+        icon:
+            LayoutDashboard,
+
+        path:
+            ROUTES.HOME,
     },
+
     {
-        title: "Overview",
-        icon: Home,
-        path: ROUTES.OVERVIEW,
+        title:
+            "Relationships",
+
+        icon:
+            Users,
+
+        path:
+            ROUTES.RELATIONSHIPS,
     },
+
     {
-        title: "Relationships",
-        icon: Users,
-        path: ROUTES.RELATIONSHIPS,
+        title:
+            "Requests",
+
+        icon:
+            UserRoundPlus,
+
+        path:
+            ROUTES.REQUESTS,
     },
+
     {
-        title: "Requests",
-        icon: UserRoundPlus,
-        path: ROUTES.REQUESTS,
+        title:
+            "Analytics",
+
+        icon:
+            BarChart3,
+
+        path:
+            ROUTES.ANALYTICS,
     },
+
     {
-        title: "Analytics",
-        icon: BarChart3,
-        path: ROUTES.ANALYTICS,
+        title:
+            "Compare",
+
+        icon:
+            GitCompareArrows,
+
+        path:
+            ROUTES.COMPARE,
     },
+
     {
-        title: "AI Insights",
-        icon: Brain,
-        path: ROUTES.AI_INSIGHTS,
+        title:
+            "Exports",
+
+        icon:
+            Download,
+
+        path:
+            ROUTES.EXPORTS,
     },
+
     {
-        title: "Compare",
-        icon: GitCompareArrows,
-        path: ROUTES.COMPARE,
+        title:
+            "Settings",
+
+        icon:
+            Settings,
+
+        path:
+            ROUTES.SETTINGS,
     },
-    {
-        title: "History",
-        icon: History,
-        path: ROUTES.TIMELINE,
-    },
-    {
-        title: "Favorites",
-        icon: Star,
-        path: ROUTES.FAVORITES,
-    },
-    {
-        title: "Labels",
-        icon: Tag,
-        path: ROUTES.LABELS,
-    },
-    {
-        title: "Notes",
-        icon: StickyNote,
-        path: ROUTES.NOTES,
-    },
-    {
-        title: "Exports",
-        icon: Download,
-        path: ROUTES.EXPORTS,
-    },
-    {
-        title: "Settings",
-        icon: Settings,
-        path: ROUTES.SETTINGS,
-    },
+
 ];
 
 export default function Sidebar() {
 
     return (
 
-        <aside className="sidebar glass">
+        <aside
+            className="sidebar glass"
+        >
 
-            <div className="sidebar-header">
+            <div
+                className="sidebar-header"
+            >
 
-                <div className="logo glow-border">
+                <div
+                    className="logo glow-border"
+                    style={{
+                        width:
+                            "90%",
+                        height:
+                            "116px",
+                        padding:
+                            0,
+                        overflow:
+                            "hidden",
+                        display:
+                            "flex",
+                        alignItems:
+                            "center",
+                        justifyContent:
+                            "center",
+                    }}
+                >
 
-                    <div className="logo-icon">
-                        IG
-                    </div>
-
-                    <div>
-
-                        <h2 className="gradient-text">
-                            InsightGram
-                        </h2>
-
-                        <small>
-                            AI Dashboard
-                        </small>
-
-                    </div>
+                    <img
+                        src={
+                            logo
+                        }
+                        alt="InsightGram"
+                        draggable={
+                            false
+                        }
+                        style={{
+                            width:
+                                "50%",
+                            height:
+                                "48%",
+                            objectFit:
+                                "cover",
+                            objectPosition:
+                                "center",
+                            display:
+                                "block",
+                            transform:
+                                "scale(2.15)",
+                        }}
+                    />
 
                 </div>
 
             </div>
 
-            <nav className="sidebar-nav">
-                // ======================================================
-// InsightGram AI
-// File : src/components/Layout/Sidebar.tsx
-// Part : 2
-// ======================================================
+            <nav
+                className="sidebar-nav"
+            >
 
-                <ul className="sidebar-menu">
+                <ul
+                    className="sidebar-menu"
+                >
 
-                    {navigation.map((item) => {
+                    {navigation.map(
+                        (
+                            item
+                        ) => {
 
-                        const Icon = item.icon;
+                            const Icon =
+                                item.icon;
 
-                        return (
+                            return (
 
-                            <li
-                                key={item.path}
-                                className="sidebar-item"
-                            >
-
-                                <NavLink
-                                    to={item.path}
-                                    className={({ isActive }) =>
-                                        isActive
-                                            ? "sidebar-link active"
-                                            : "sidebar-link"
+                                <li
+                                    key={
+                                        item.path
                                     }
+                                    className="sidebar-item"
                                 >
 
-                                    <Icon
-                                        size={20}
-                                        strokeWidth={2}
-                                    />
+                                    <NavLink
+                                        to={
+                                            item.path
+                                        }
+                                        className={({
+                                            isActive,
+                                        }) =>
+                                            isActive
+                                                ? "sidebar-link active"
+                                                : "sidebar-link"
+                                        }
+                                    >
 
-                                    <span>
-                                        {item.title}
-                                    </span>
+                                        <Icon
+                                            size={
+                                                20
+                                            }
+                                        />
 
-                                </NavLink>
+                                        <span>
 
-                            </li>
+                                            {
+                                                item.title
+                                            }
 
-                        );
+                                        </span>
 
-                    })}
+                                    </NavLink>
+
+                                </li>
+
+                            );
+
+                        }
+                    )}
 
                 </ul>
 
             </nav>
 
-            <div className="sidebar-footer">
+            <div
+                className="sidebar-footer"
+            >
 
-                <div className="card">
+                <div
+                    className="card"
+                    style={{
+                        marginTop:
+                            "-20px",
+                        height:
+                            "80px",
+                    }}
+                >
 
                     <h4
                         style={{
-                            marginBottom: "8px",
+                            marginBottom:
+                                "5px",
+                            marginTop:
+                                "-10px",
                         }}
                     >
+
                         AI Status
+
                     </h4>
 
                     <div
                         style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
+                            display:
+                                "flex",
+                            alignItems:
+                                "center",
+                            gap:
+                                "10px",
                         }}
                     >
 
-                        <span className="status-dot status-online" />
+                        <span
+                            className="status-dot status-online"
+                        />
 
                         <span>
+
                             AI Engine Ready
+
                         </span>
 
                     </div>
-
-                </div>
-                // ======================================================
-// InsightGram AI
-// File : src/components/Layout/Sidebar.tsx
-// Part : 3
-// ======================================================
 
                 </div>
 
                 <div
                     className="card"
                     style={{
-                        marginTop: "18px",
+                        marginTop:
+                            "10px",
                     }}
                 >
 
                     <div
                         style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            marginBottom: "8px",
+                            display:
+                                "flex",
+                            justifyContent:
+                                "space-between",
+                            marginBottom:
+                                "8px",
                         }}
                     >
 
-                        <span>Version</span>
+                        <span>
+                            Version
+                        </span>
 
-                        <strong>v1.0.0</strong>
+                        <strong>
+                            v1.0.0
+                        </strong>
 
                     </div>
 
                     <div
                         style={{
-                            display: "flex",
-                            justifyContent: "space-between",
+                            display:
+                                "flex",
+                            justifyContent:
+                                "space-between",
                         }}
                     >
 
-                        <span>Mode</span>
+                        <span>
+                            Mode
+                        </span>
 
-                        <span className="badge badge-primary">
+                        <span
+                            className="badge badge-primary"
+                        >
                             Offline
                         </span>
 

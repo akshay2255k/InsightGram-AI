@@ -1,7 +1,6 @@
 // ======================================================
 // InsightGram AI
 // File : src/components/Dashboard/OverviewCards.tsx
-// Part : 1
 // ======================================================
 
 import {
@@ -9,19 +8,41 @@ import {
     UserPlus,
     UserMinus,
     HeartHandshake,
+    Clock3,
 } from "lucide-react";
+
+import {
+    useNavigate,
+} from "react-router-dom";
 
 import StatCard from "./StatCard";
 
-import { useAppStore } from "../../store/appStore";
+import {
+    useAppStore,
+} from "../../store/appStore";
 
-export default function OverviewCards() {
+import {
+    ROUTES,
+} from "../../routes";
+
+interface OverviewCardsProps {
+
+    interactive?: boolean;
+
+}
+
+export default function OverviewCards({
+
+    interactive = true,
+
+}: OverviewCardsProps) {
 
     const {
-
         statistics,
-
     } = useAppStore();
+
+    const navigate =
+        useNavigate();
 
     if (!statistics) {
 
@@ -29,11 +50,41 @@ export default function OverviewCards() {
 
     }
 
+    const goToRelationships =
+        (
+            filter:
+                | "all"
+                | "mutual"
+                | "notFollowingBack"
+                | "youDontFollowBack"
+        ) => {
+
+            navigate(
+                `${ROUTES.RELATIONSHIPS}?filter=${filter}`
+            );
+
+        };
+
+    const goToRequests =
+        (
+            filter:
+                | "pending"
+                | "recent"
+                | "closeFriend"
+                | "recentlyUnfollowed"
+        ) => {
+
+            navigate(
+                `${ROUTES.REQUESTS}?filter=${filter}`
+            );
+
+        };
+
     return (
 
-        <section
-            className="overview-grid"
-        >
+        <section className="overview-grid">
+
+            {/* Followers */}
 
             <StatCard
 
@@ -44,14 +95,25 @@ export default function OverviewCards() {
                 }
 
                 icon={
-                    <Users size={24}/>
+                    <Users size={24} />
                 }
 
                 color="#18C8FF"
 
                 description="People following you"
 
+                onClick={
+                    interactive
+                        ? () =>
+                              goToRelationships(
+                                  "youDontFollowBack"
+                              )
+                        : undefined
+                }
+
             />
+
+            {/* Following */}
 
             <StatCard
 
@@ -62,14 +124,25 @@ export default function OverviewCards() {
                 }
 
                 icon={
-                    <UserPlus size={24}/>
+                    <UserPlus size={24} />
                 }
 
                 color="#6D5DF6"
 
                 description="Accounts you follow"
 
+                onClick={
+                    interactive
+                        ? () =>
+                              goToRelationships(
+                                  "notFollowingBack"
+                              )
+                        : undefined
+                }
+
             />
+
+            {/* Not Following Back */}
 
             <StatCard
 
@@ -80,21 +153,25 @@ export default function OverviewCards() {
                 }
 
                 icon={
-                    <UserMinus size={24}/>
+                    <UserMinus size={24} />
                 }
 
                 color="#FF5A7A"
 
                 description="You follow them"
 
+                onClick={
+                    interactive
+                        ? () =>
+                              goToRelationships(
+                                  "notFollowingBack"
+                              )
+                        : undefined
+                }
+
             />
 
-            <StatCard
-            // ======================================================
-// InsightGram AI
-// File : src/components/Dashboard/OverviewCards.tsx
-// Part : 2
-// ======================================================
+            {/* Mutual */}
 
             <StatCard
 
@@ -105,14 +182,27 @@ export default function OverviewCards() {
                 }
 
                 icon={
-                    <HeartHandshake size={24}/>
+                    <HeartHandshake
+                        size={24}
+                    />
                 }
 
                 color="#34D399"
 
                 description="You follow each other"
 
+                onClick={
+                    interactive
+                        ? () =>
+                              goToRelationships(
+                                  "mutual"
+                              )
+                        : undefined
+                }
+
             />
+
+            {/* Pending */}
 
             <StatCard
 
@@ -123,14 +213,25 @@ export default function OverviewCards() {
                 }
 
                 icon={
-                    <UserPlus size={24}/>
+                    <Clock3 size={24} />
                 }
 
                 color="#FBBF24"
 
                 description="Waiting for acceptance"
 
+                onClick={
+                    interactive
+                        ? () =>
+                              goToRequests(
+                                  "pending"
+                              )
+                        : undefined
+                }
+
             />
+
+            {/* Relationship Score */}
 
             <StatCard
 
@@ -139,7 +240,9 @@ export default function OverviewCards() {
                 value={`${statistics.relationshipScore}%`}
 
                 icon={
-                    <HeartHandshake size={24}/>
+                    <HeartHandshake
+                        size={24}
+                    />
                 }
 
                 color="#18C8FF"

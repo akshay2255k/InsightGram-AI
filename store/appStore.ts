@@ -9,14 +9,126 @@ import type {
     DashboardStatistics,
     InstagramExport,
     RelationshipInsight,
+    InstagramUser,
 } from "../types/instagram";
 
+export type RelationshipFilter =
+    | "all"
+    | "mutual"
+    | "notFollowingBack"
+    | "youDontFollowBack";
+
+export type RequestFilter =
+    | "all"
+    | "pending"
+    | "recent"
+    | "closeFriend"
+    | "recentlyUnfollowed";
+
+export type RequestReviewKey =
+    | "pending"
+    | "recent"
+    | "closeFriend"
+    | "recentlyUnfollowed";
+
+type RequestReviewState =
+    Record<string, boolean>;
+
+const REVIEW_STORAGE_KEY =
+    "insightgram_request_review_state";
+
+function loadReviewState():
+    RequestReviewState {
+
+    try {
+
+        const raw =
+            localStorage.getItem(
+                REVIEW_STORAGE_KEY
+            );
+
+        if (!raw) {
+
+            return {};
+
+        }
+
+        const parsed =
+            JSON.parse(raw);
+
+        if (
+            parsed &&
+            typeof parsed === "object" &&
+            !Array.isArray(parsed)
+        ) {
+
+            return parsed as RequestReviewState;
+
+        }
+
+        return {};
+
+    } catch {
+
+        return {};
+
+    }
+
+}
+
+function saveReviewState(
+    state: RequestReviewState
+): void {
+
+    localStorage.setItem(
+        REVIEW_STORAGE_KEY,
+        JSON.stringify(state)
+    );
+
+}
+
+function reviewKey(
+    type: RequestReviewKey,
+    username: string
+): string {
+
+    return `${type}:${username
+        .trim()
+        .toLowerCase()}`;
+
+}
+
+function countRemaining(
+    users: InstagramUser[],
+    type: RequestReviewKey,
+    reviewState: RequestReviewState
+): number {
+
+    return users.filter(
+        (user) =>
+            !reviewState[
+                reviewKey(
+                    type,
+                    user.username
+                )
+            ]
+    ).length;
+
+}
+
 interface AppState {
+
     exportData: InstagramExport | null;
 
-    statistics: DashboardStatistics | null;
+    users: InstagramUser[];
 
-    insight: RelationshipInsight | null;
+    statistics:
+        | DashboardStatistics
+        | null;
+
+    insight:
+        | RelationshipInsight
+        | null;
 
     loading: boolean;
 
@@ -26,16 +138,32 @@ interface AppState {
 
     uploadedAt: string | null;
 
+    searchQuery: string;
+
+    relationshipFilter:
+        RelationshipFilter;
+
+    requestReviewState:
+        RequestReviewState;
+
     setExportData: (
         data: InstagramExport | null
     ) => void;
 
+    setUsers: (
+        users: InstagramUser[]
+    ) => void;
+
     setStatistics: (
-        statistics: DashboardStatistics | null
+        statistics:
+            | DashboardStatistics
+            | null
     ) => void;
 
     setInsight: (
-        insight: RelationshipInsight | null
+        insight:
+            | RelationshipInsight
+            | null
     ) => void;
 
     setLoading: (
@@ -54,69 +182,292 @@ interface AppState {
         uploadedAt: string | null
     ) => void;
 
+    setSearchQuery: (
+        value: string
+    ) => void;
+
+    setRelationshipFilter: (
+        filter: RelationshipFilter
+    ) => void;
+
+    setRequestReviewed: (
+        type: RequestReviewKey,
+        username: string,
+        reviewed: boolean
+    ) => void;
+
+    isRequestReviewed: (
+        type: RequestReviewKey,
+        username: string
+    ) => boolean;
+
+    clearRequestReviewState: () => void;
+
     reset: () => void;
+
 }
 
-export const useAppStore = create<AppState>((set) => ({
-    exportData: null,
+export const useAppStore =
+    create<AppState>((set, get) => ({
 
-    statistics: null,
+        exportData: null,
 
-    insight: null,
+        users: [],
 
-    loading: false,
+        statistics: null,
 
-    initialized: false,
+        insight: null,
 
-    currentFileName: null,
+        loading: false,
 
-    uploadedAt: null,
+        initialized: false,
 
-    setExportData: (data) =>
-        set({
-            exportData: data,
-        }),
+        currentFileName: null,
 
-    setStatistics: (statistics) =>
-        set({
-            statistics,
-        }),
+        uploadedAt: null,
 
-    setInsight: (insight) =>
-        set({
-            insight,
-        }),
+        searchQuery: "",
 
-    setLoading: (loading) =>
-        set({
-            loading,
-        }),
+        relationshipFilter: "all",
 
-    setInitialized: (initialized) =>
-        set({
-            initialized,
-        }),
+        requestReviewState:
+            loadReviewState(),
 
-    setCurrentFileName: (currentFileName) =>
-        set({
-            currentFileName,
-        }),
+        setExportData: (
+            data
+        ) =>
+            set({
+                exportData: data,
+            }),
 
-    setUploadedAt: (uploadedAt) =>
-        set({
-            uploadedAt,
-        }),
+        setUsers: (
+            users
+        ) =>
+            set({
+                users,
+            }),
 
-    reset: () =>
-        set({
-            exportData: null,
-            statistics: null,
-            insight: null,
-            loading: false,
-            initialized: false,
-            currentFileName: null,
-            uploadedAt: null,
-        }),
-}));
+        setStatistics: (
+            statistics
+        ) =>
+            set({
+                statistics,
+            }),
+
+        setInsight: (
+            insight
+        ) =>
+            set({
+                insight,
+            }),
+
+        setLoading: (
+            loading
+        ) =>
+            set({
+                loading,
+            }),
+
+        setInitialized: (
+            initialized
+        ) =>
+            set({
+                initialized,
+            }),
+
+        setCurrentFileName: (
+            currentFileName
+        ) =>
+            set({
+                currentFileName,
+            }),
+
+        setUploadedAt: (
+            uploadedAt
+        ) =>
+            set({
+                uploadedAt,
+            }),
+
+        setSearchQuery: (
+            value
+        ) =>
+            set({
+                searchQuery: value,
+            }),
+
+        setRelationshipFilter: (
+            filter
+        ) =>
+            set({
+                relationshipFilter:
+                    filter,
+            }),
+
+        setRequestReviewed: (
+            type,
+            username,
+            reviewed
+        ) => {
+
+            const currentState =
+                get().requestReviewState;
+
+            const key =
+                reviewKey(
+                    type,
+                    username
+                );
+
+            const nextState = {
+                ...currentState,
+                [key]: reviewed,
+            };
+
+            if (!reviewed) {
+
+                delete nextState[key];
+
+            }
+
+            saveReviewState(
+                nextState
+            );
+
+            const currentStatistics =
+                get().statistics;
+
+            const exportData =
+                get().exportData;
+
+            if (
+                currentStatistics &&
+                exportData
+            ) {
+
+                const nextStatistics: DashboardStatistics = {
+
+                    ...currentStatistics,
+
+                    pendingRequests:
+                        countRemaining(
+                            exportData.pendingRequests,
+                            "pending",
+                            nextState
+                        ),
+
+                    recentRequests:
+                        countRemaining(
+                            exportData.recentRequests,
+                            "recent",
+                            nextState
+                        ),
+
+                    recentlyUnfollowed:
+                        countRemaining(
+                            exportData.recentlyUnfollowed,
+                            "recentlyUnfollowed",
+                            nextState
+                        ),
+
+                    closeFriends:
+                        countRemaining(
+                            exportData.closeFriends,
+                            "closeFriend",
+                            nextState
+                        ),
+
+                };
+
+                set({
+
+                    requestReviewState:
+                        nextState,
+
+                    statistics:
+                        nextStatistics,
+
+                });
+
+                return;
+
+            }
+
+            set({
+
+                requestReviewState:
+                    nextState,
+
+            });
+
+        },
+
+        isRequestReviewed: (
+            type,
+            username
+        ) => {
+
+            return Boolean(
+                get()
+                    .requestReviewState[
+                    reviewKey(
+                        type,
+                        username
+                    )
+                ]
+            );
+
+        },
+
+        clearRequestReviewState: () => {
+
+            localStorage.removeItem(
+                REVIEW_STORAGE_KEY
+            );
+
+            set({
+                requestReviewState: {},
+            });
+
+        },
+
+        reset: () => {
+
+            localStorage.removeItem(
+                REVIEW_STORAGE_KEY
+            );
+
+            set({
+
+                exportData: null,
+
+                users: [],
+
+                statistics: null,
+
+                insight: null,
+
+                loading: false,
+
+                initialized: false,
+
+                currentFileName:
+                    null,
+
+                uploadedAt: null,
+
+                searchQuery: "",
+
+                relationshipFilter:
+                    "all",
+
+                requestReviewState:
+                    {},
+
+            });
+
+        },
+
+    }));
 
 export default useAppStore;

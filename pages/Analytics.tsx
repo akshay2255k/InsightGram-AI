@@ -1,21 +1,25 @@
 // ======================================================
 // InsightGram AI
 // File : src/pages/Analytics.tsx
-// Part : 1
 // ======================================================
 
-import DashboardLayout from "../components/Layout/DashboardLayout";
-import RelationshipChart from "../components/Charts/RelationshipChart";
-import OverviewCards from "../components/Dashboard/OverviewCards";
+import DashboardLayout
+    from "../components/Layout/DashboardLayout";
 
-import { useAppStore } from "../store/appStore";
+import RelationshipChart
+    from "../components/Charts/RelationshipChart";
+
+import OverviewCards
+    from "../components/Dashboard/OverviewCards";
+
+import {
+    useAppStore,
+} from "../store/appStore";
 
 export default function Analytics() {
 
     const {
-
         statistics,
-
     } = useAppStore();
 
     return (
@@ -43,22 +47,20 @@ export default function Analytics() {
 
                 <>
 
-                    <OverviewCards />
+                    <OverviewCards
+                        interactive={false}
+                    />
 
                     <div
                         style={{
-                            marginTop: "24px",
+                            marginTop:
+                                "24px",
                         }}
                     >
 
                         <RelationshipChart />
 
                     </div>
-                    // ======================================================
-// InsightGram AI
-// File : src/pages/Analytics.tsx
-// Part : 2
-// ======================================================
 
                 </>
 
@@ -67,8 +69,10 @@ export default function Analytics() {
                 <div
                     className="card"
                     style={{
-                        padding: "40px",
-                        textAlign: "center",
+                        padding:
+                            "40px",
+                        textAlign:
+                            "center",
                     }}
                 >
 
@@ -78,11 +82,17 @@ export default function Analytics() {
 
                     </h2>
 
-                    <p>
+                    <p
+                        style={{
+                            color:
+                                "#98A2B3",
+                            marginTop:
+                                "12px",
+                        }}
+                    >
 
                         Upload an official Instagram ZIP
-                        export to generate analytics and
-                        relationship insights.
+                        export to generate analytics.
 
                     </p>
 

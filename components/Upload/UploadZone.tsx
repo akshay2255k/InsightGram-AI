@@ -1,8 +1,3 @@
-// ======================================================
-// InsightGram AI
-// File : src/components/Upload/UploadZone.tsx
-// Part : 1
-// ======================================================
 
 import { useCallback } from "react";
 
@@ -114,11 +109,6 @@ export default function UploadZone() {
                     data export ZIP here
 
                 </p>
-                // ======================================================
-// InsightGram AI
-// File : src/components/Upload/UploadZone.tsx
-// Part : 2
-// ======================================================
 
                 <div className="upload-features">
 
@@ -214,11 +204,6 @@ export default function UploadZone() {
                     </div>
 
                 )}
-                // ======================================================
-// InsightGram AI
-// File : src/components/Upload/UploadZone.tsx
-// Part : 3
-// ======================================================
 
             </div>
 

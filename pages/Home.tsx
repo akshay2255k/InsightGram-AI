@@ -1,8 +1,3 @@
-// ======================================================
-// InsightGram AI
-// File : src/pages/Home.tsx
-// Part : 1
-// ======================================================
 
 import DashboardLayout from "../components/Layout/DashboardLayout";
 import UploadZone from "../components/Upload/UploadZone";
@@ -31,35 +26,16 @@ export default function Home() {
             ) : (
 
                 <>
-                // ======================================================
-// InsightGram AI
-// File : src/pages/Home.tsx
-// Part : 2
-// ======================================================
 
                     <OverviewCards />
 
-                    <div
-                        className="dashboard-grid"
-                        style={{
-                            display: "grid",
-                            gridTemplateColumns:
-                                "2fr 1fr",
-                            gap: "24px",
-                            marginTop: "24px",
-                        }}
-                    >
+                    <div className="dashboard-grid">
 
                         <RelationshipChart />
 
                         <AIInsights />
 
                     </div>
-                    // ======================================================
-// InsightGram AI
-// File : src/pages/Home.tsx
-// Part : 3
-// ======================================================
 
                 </>
 

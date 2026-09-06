@@ -1,8 +1,4 @@
-// ======================================================
-// InsightGram AI
-// File : src/components/Dashboard/RelationshipTable.tsx
-// Part : 1
-// ======================================================
+
 
 import { useMemo, useState } from "react";
 
@@ -131,11 +127,6 @@ export default function RelationshipTable({
                     </thead>
 
                     <tbody>
-                        // ======================================================
-// InsightGram AI
-// File : src/components/Dashboard/RelationshipTable.tsx
-// Part : 2
-// ======================================================
 
                         {sortedUsers.map(
                             (user) => {
@@ -243,11 +234,6 @@ export default function RelationshipTable({
 
                             }
                         )}
-                        // ======================================================
-// InsightGram AI
-// File : src/components/Dashboard/RelationshipTable.tsx
-// Part : 3
-// ======================================================
 
                         {sortedUsers.length === 0 && (
 
@@ -309,11 +295,6 @@ export default function RelationshipTable({
                     account(s)
 
                 </span>
-                // ======================================================
-// InsightGram AI
-// File : src/components/Dashboard/RelationshipTable.tsx
-// Part : 4
-// ======================================================
 
                 <span>
 

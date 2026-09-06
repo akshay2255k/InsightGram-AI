@@ -1,0 +1,299 @@
+/* ======================================================
+   InsightGram AI
+   File : src/styles/theme.css
+   ====================================================== */
+
+/* ======================================================
+   Dark Theme
+   ====================================================== */
+
+:root,
+html[data-theme="dark"] {
+
+    color-scheme: dark;
+
+    --ig-bg:
+        #07111f;
+
+    --ig-surface:
+        #0d1828;
+
+    --ig-surface-soft:
+        #111f32;
+
+    --ig-border:
+        rgba(255, 255, 255, 0.08);
+
+    --ig-text:
+        #f5f7fa;
+
+    --ig-text-secondary:
+        #98a2b3;
+
+    --ig-input:
+        #0d1828;
+
+}
+
+/* ======================================================
+   Light Theme
+   ====================================================== */
+
+html[data-theme="light"] {
+
+    color-scheme: light;
+
+    --ig-bg:
+        #f4f7fb;
+
+    --ig-surface:
+        #ffffff;
+
+    --ig-surface-soft:
+        #f8fafc;
+
+    --ig-border:
+        #dfe5ef;
+
+    --ig-text:
+        #111827;
+
+    --ig-text-secondary:
+        #667085;
+
+    --ig-input:
+        #ffffff;
+
+}
+
+/* ======================================================
+   Global
+   ====================================================== */
+
+html,
+body,
+#root {
+
+    min-height:
+        100%;
+
+}
+
+body {
+
+    background:
+        var(--ig-bg);
+
+    color:
+        var(--ig-text);
+
+    transition:
+        background-color
+        0.25s ease,
+        color
+        0.25s ease;
+
+}
+
+/* ======================================================
+   Main surfaces
+   ====================================================== */
+
+.card,
+.glass,
+.sidebar,
+.topbar {
+
+    transition:
+        background-color
+        0.25s ease,
+        border-color
+        0.25s ease,
+        color
+        0.25s ease;
+
+}
+
+/* ======================================================
+   Light theme surfaces
+   ====================================================== */
+
+html[data-theme="light"] .dashboard-layout {
+
+    background:
+        var(--ig-bg);
+
+}
+
+html[data-theme="light"] .dashboard-main {
+
+    background:
+        var(--ig-bg);
+
+}
+
+html[data-theme="light"] .sidebar,
+html[data-theme="light"] .topbar,
+html[data-theme="light"] .card,
+html[data-theme="light"] .glass {
+
+    background:
+        var(--ig-surface) !important;
+
+    border-color:
+        var(--ig-border) !important;
+
+    color:
+        var(--ig-text) !important;
+
+}
+
+/* ======================================================
+   Light navigation
+   ====================================================== */
+
+html[data-theme="light"] .sidebar-link {
+
+    color:
+        #526071 !important;
+
+}
+
+html[data-theme="light"] .sidebar-link:hover {
+
+    color:
+        #111827 !important;
+
+}
+
+html[data-theme="light"] .sidebar-link.active {
+
+    color:
+        #ffffff !important;
+
+}
+
+/* ======================================================
+   Light text
+   ====================================================== */
+
+html[data-theme="light"] p,
+html[data-theme="light"] small,
+html[data-theme="light"] label {
+
+    color:
+        var(--ig-text-secondary);
+
+}
+
+html[data-theme="light"] h1,
+html[data-theme="light"] h2,
+html[data-theme="light"] h3,
+html[data-theme="light"] h4,
+html[data-theme="light"] h5,
+html[data-theme="light"] h6 {
+
+    color:
+        var(--ig-text);
+
+}
+
+/* ======================================================
+   Inputs
+   ====================================================== */
+
+html[data-theme="light"] input,
+html[data-theme="light"] select,
+html[data-theme="light"] textarea {
+
+    background:
+        var(--ig-input) !important;
+
+    color:
+        var(--ig-text) !important;
+
+    border-color:
+        #d7deea !important;
+
+}
+
+html[data-theme="light"] input::placeholder,
+html[data-theme="light"] textarea::placeholder {
+
+    color:
+        #98a2b3 !important;
+
+}
+
+html[data-theme="light"] option {
+
+    background:
+        #ffffff;
+
+    color:
+        #111827;
+
+}
+
+/* ======================================================
+   Tables
+   ====================================================== */
+
+html[data-theme="light"]
+.relationship-table th {
+
+    background:
+        #f3f6fa !important;
+
+    color:
+        #344054 !important;
+
+}
+
+html[data-theme="light"]
+.relationship-table td {
+
+    color:
+        #1f2937 !important;
+
+    border-color:
+        #e4e8ef !important;
+
+}
+
+/* ======================================================
+   Buttons
+   ====================================================== */
+
+html[data-theme="light"] .btn-secondary,
+html[data-theme="light"] .icon-btn,
+html[data-theme="light"] .icon-button {
+
+    border-color:
+        #d7deea;
+
+}
+
+/* ======================================================
+   Theme helper classes
+   ====================================================== */
+
+body.theme-light {
+
+    background:
+        var(--ig-bg);
+
+    color:
+        var(--ig-text);
+
+}
+
+body.theme-dark {
+
+    background:
+        var(--ig-bg);
+
+    color:
+        var(--ig-text);
+
+}

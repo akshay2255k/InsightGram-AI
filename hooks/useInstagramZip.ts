@@ -1,10 +1,12 @@
 // ======================================================
 // InsightGram AI
 // File : src/hooks/useInstagramZip.ts
-// Part : 1
 // ======================================================
 
-import { useCallback, useState } from "react";
+import {
+    useCallback,
+    useState,
+} from "react";
 
 import {
     loadInstagramZip,
@@ -13,6 +15,7 @@ import {
 
 import {
     analyzeRelationships,
+    generateRelationshipInsight,
     type RelationshipAnalysis,
 } from "../services/relationshipEngine";
 
@@ -21,7 +24,9 @@ import {
     buildRelationshipSummary,
 } from "../services/aiEngine";
 
-import { useAppStore } from "../store/appStore";
+import {
+    useAppStore,
+} from "../store/appStore";
 
 export interface UseInstagramZipResult {
 
@@ -29,25 +34,41 @@ export interface UseInstagramZipResult {
 
     error: string | null;
 
-    analysis: RelationshipAnalysis | null;
+    analysis:
+        | RelationshipAnalysis
+        | null;
 
-    uploadZip: (
-        file: File
-    ) => Promise<void>;
+    uploadZip:
+        (
+            file: File
+        ) => Promise<void>;
 
-    reset: () => void;
+    reset:
+        () => void;
 
 }
 
-export function useInstagramZip(): UseInstagramZipResult {
+export function useInstagramZip():
+    UseInstagramZipResult {
 
-    const [loading, setLoading] =
+    const [
+        loading,
+        setLoading,
+    ] =
         useState(false);
 
-    const [error, setError] =
-        useState<string | null>(null);
+    const [
+        error,
+        setError,
+    ] =
+        useState<string | null>(
+            null
+        );
 
-    const [analysis, setAnalysis] =
+    const [
+        analysis,
+        setAnalysis,
+    ] =
         useState<RelationshipAnalysis | null>(
             null
         );
@@ -56,120 +77,207 @@ export function useInstagramZip(): UseInstagramZipResult {
 
         setExportData,
 
+        setUsers,
+
         setStatistics,
 
         setInsight,
 
-        setLoading: setStoreLoading,
+        setLoading:
+            setStoreLoading,
 
         setCurrentFileName,
 
         setUploadedAt,
 
-    } = useAppStore();
+        clearRequestReviewState,
 
-    const uploadZip = useCallback(
-        async (file: File) => {
+    } =
+        useAppStore();
 
-            try {
+    const uploadZip =
+        useCallback(
+            async (
+                file: File
+            ) => {
 
-                setLoading(true);
+                try {
 
-                setStoreLoading(true);
+                    if (
+                        !file.name
+                            .toLowerCase()
+                            .endsWith(
+                                ".zip"
+                            )
+                    ) {
 
-                setError(null);
+                        throw new Error(
+                            "Please upload a valid Instagram ZIP file."
+                        );
 
-                const { zip } =
-                    await loadInstagramZip(file);
+                    }
 
-                const exportData =
-                    await parseInstagramExport(zip);
+                    setLoading(
+                        true
+                    );
 
-                const relationshipAnalysis =
-                    analyzeRelationships(
+                    setStoreLoading(
+                        true
+                    );
+
+                    setError(
+                        null
+                    );
+
+                    clearRequestReviewState();
+
+                    const {
+                        zip,
+                    } =
+                        await loadInstagramZip(
+                            file
+                        );
+
+                    const exportData =
+                        await parseInstagramExport(
+                            zip
+                        );
+
+                    const relationshipAnalysis =
+                        analyzeRelationships(
+                            exportData
+                        );
+
+                    const aiResult =
+                        generateAIAnalysis(
+                            relationshipAnalysis.users
+                        );
+
+                    const aiSummary =
+                        buildRelationshipSummary(
+                            aiResult
+                        );
+
+                    const relationshipInsight =
+                        generateRelationshipInsight(
+                            relationshipAnalysis
+                        );
+
+                    setExportData(
                         exportData
                     );
 
-                const aiResult =
-                    generateAIAnalysis(
+                    setUsers(
                         relationshipAnalysis.users
                     );
 
-                const insight =
-                    buildRelationshipSummary(
-                        aiResult
+                    setStatistics(
+                        relationshipAnalysis.statistics
                     );
 
-                setExportData(exportData);
+                    setInsight({
 
-                setStatistics(
-                    relationshipAnalysis.statistics
-                );
+                        score:
+                            aiSummary.score,
 
-                setInsight(insight);
+                        summary:
+                            aiSummary.summary,
 
-                setCurrentFileName(file.name);
+                        recommendations:
+                            aiSummary
+                                .recommendations,
 
-                setUploadedAt(
-                    new Date().toISOString()
-                );
+                    });
+
+                    setCurrentFileName(
+                        file.name
+                    );
+
+                    setUploadedAt(
+                        new Date().toISOString()
+                    );
+
+                    setAnalysis(
+                        relationshipAnalysis
+                    );
+
+                    void relationshipInsight;
+
+                } catch (
+                    err
+                ) {
+
+                    const message =
+                        err instanceof Error
+                            ? err.message
+                            : "Unable to parse Instagram ZIP.";
+
+                    console.error(
+                        "Instagram ZIP parsing failed:",
+                        err
+                    );
+
+                    setError(
+                        message
+                    );
+
+                } finally {
+
+                    setLoading(
+                        false
+                    );
+
+                    setStoreLoading(
+                        false
+                    );
+
+                }
+
+            },
+            [
+
+                setExportData,
+
+                setUsers,
+
+                setStatistics,
+
+                setInsight,
+
+                setStoreLoading,
+
+                setCurrentFileName,
+
+                setUploadedAt,
+
+                clearRequestReviewState,
+
+            ]
+        );
+
+    const reset =
+        useCallback(
+            () => {
+
+                useAppStore
+                    .getState()
+                    .reset();
 
                 setAnalysis(
-                    relationshipAnalysis
+                    null
                 );
-
-            } catch (err) {
 
                 setError(
-                    err instanceof Error
-                        ? err.message
-                        : "Unable to parse Instagram ZIP."
+                    null
                 );
 
-            }
-            // ======================================================
-// InsightGram AI
-// File : src/hooks/useInstagramZip.ts
-// Part : 2
-// ======================================================
+                setLoading(
+                    false
+                );
 
-            finally {
-
-                setLoading(false);
-
-                setStoreLoading(false);
-
-            }
-
-        },
-        [
-
-            setExportData,
-
-            setStatistics,
-
-            setInsight,
-
-            setStoreLoading,
-
-            setCurrentFileName,
-
-            setUploadedAt,
-
-        ]
-    );
-
-    const reset = useCallback(() => {
-
-        setAnalysis(null);
-
-        setError(null);
-
-        setLoading(false);
-
-        useAppStore.getState().reset();
-
-    }, []);
+            },
+            []
+        );
 
     return {
 
